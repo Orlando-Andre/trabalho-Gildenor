@@ -15,7 +15,7 @@ function validarDadosLogin() {
         }
     }
 }
-
+ 
 function enviaDadosLogin(nome,senha) {
 
     $.ajax({
