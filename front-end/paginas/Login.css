@@ -3,9 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Passion+One&family=Red+Hat+Display:wght@500;700;900&display=swap');
 
 :root {
-    --bege: #FEFAE0;
+    --azulEscuro: #324FA6;
 }
-
 body {
     margin: 0;
     font-family: 'Noto Sans', sans-serif;
@@ -17,7 +16,7 @@ body {
 .principal-login {
     width: 70vw;
     height: 80vh;
-    background-color: var(--bege);
+    background-color: white;
     /*A background-color era azul */
     display: flex;
     align-items: center;
@@ -29,7 +28,7 @@ body {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.477);
 }
 
-.esquerda-login {
+.direita-login {
     width: 100%;
     height: 100%;
     display: flex;
@@ -37,15 +36,19 @@ body {
 }
 
 
-.esquerda-login  img {
+.direita-login  img {
     width: 100%;
-    height: 100%;
+    height: 90%;
+    margin-right: 2rem;
     object-fit: contain;
     border-radius: 20px;
 }
 
+#imagem-login {
+    margin-left: -5rem;
+}
 
-.direita-login {
+.esquerda-login {
     width: 100vw;
     height: 100%;
     display: flex;
@@ -85,8 +88,8 @@ body {
     border: none;
     border-radius: 10px;
     padding: 15px;
-    background-color: var(--azul);
-    color: var(--azul);
+    background-color: var(--azulEscuro);
+    color: white;
     /*color: #1c7293; */
     box-shadow: 1px 1px 6px #00000076;
     outline: none;
@@ -100,12 +103,12 @@ body {
 }
 
 .textfield > input::placeholder {
-    color: #1c7293;
+    color: white;
     letter-spacing: 2px;
 }
 
 .btn-login {
-    width: 100%;
+    width: 50%;
     padding: 16px 0px;
     margin: 25px;
     font-weight: 800;
