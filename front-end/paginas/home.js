@@ -48,7 +48,14 @@ function escondeDados() {
 
     // Obtendo a referência dos dados que estão na tela e escondendo
     const box = document.querySelector('.main');
-    box.classList.toggle('esconder')
+    box.classList.add('esconder')
 
 }
 
+function mostraDados() {
+
+    iframe.src = "Login.html";
+
+    
+
+}
