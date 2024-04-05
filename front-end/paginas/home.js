@@ -50,12 +50,10 @@ function escondeDados() {
     const box = document.querySelector('.main');
     box.classList.add('esconder')
 
+
 }
 
-function mostraDados() {
+function fechar() {
 
-    iframe.src = "Login.html";
-
-    
 
 }
