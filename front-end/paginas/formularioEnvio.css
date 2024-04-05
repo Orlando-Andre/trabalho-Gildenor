@@ -1,0 +1,88 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Passion+One&family=Red+Hat+Display:wght@500;700;900&display=swap');
+
+/* Defalts */
+
+h1, h2, h3{
+    color: white;
+}
+
+/* Page Style */
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: rgb(255, 255, 255);
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.container {
+    width: 90%;
+    background-color: #004AAD;
+    height: 90%;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.box-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70%;
+    width: 100%;
+}
+
+.box {
+    text-align: center;
+    background-color: #7FA4D5;
+    padding: 1rem;
+    width: 30%;
+    border-radius: 1rem;
+}
+
+.footerButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.buttons {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+}
+
+.intputs {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+}
+
+#description {
+    margin-top: 2rem;
+    width: 100%;
+    min-height: 10rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+
+
+
