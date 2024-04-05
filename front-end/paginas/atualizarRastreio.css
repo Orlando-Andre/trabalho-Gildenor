@@ -2,18 +2,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Passion+One&family=Red+Hat+Display:wght@500;700;900&display=swap');
 
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 800;
+    color: white;
+}
+
+:root {
+    --azulEscuro: #0d21a1;
+    --azulClaro: #5fa8d3;
+    --verde: #70e000;
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --azulClaro: #5fa8d3;
-    --verde: #70e000;
-}
-
 body {
+    margin: 0;
     height: 100vh;
     font-family: 'Noto Sans', sans-serif;
     display: flex;
@@ -32,7 +40,7 @@ body {
     padding: 35px;
     gap: 20px;
     justify-content: space-between;
-    background-color: #0d21a1;
+    background-color: var(--azulEscuro);
 }
 
 .esquerda {
