@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="agencias.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+    <title>Cadastrar Agências</title>
+</head>
+<body>
+    <header>
+
+        <header>
+
+            <img class="logo" src="logoBranco.png" alt="">
+            <h1>Agência x</h1>
+    
+        </header>
+        
+    </header>
+    <main>
+
+        <div class="head-main">
+
+            <div class="div-botao">
+                <button class="botao cadastrar" id="btnCadastrarLoja" type="button">Adicionar Agência</button>
+            </div>
+
+            
+            <div class="div-pesquisa">
+
+                <input id="pesquisa" type="text" class="modal-campo" placeholder="Digite o nome">
+                <span class="icon" onclick="pesquisaComplexa()"><i class="bi bi-search"></i></span>
+            </div>
+            
+        </div>
+
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>CEP</th>
+                    <th>Local</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabela">
+
+
+            </tbody>
+        </table>
+
+        <div class="modal" id="modal">
+
+            <div class="modal-content">
+
+                <header class="modal-header">
+                    <h2>Adicionar nova Agência</h2>
+                    <span class="modal-fechar"id="modalFechar">&#10006;</span>
+                </header>
+                <form class="modal-form">
+
+                    <div class="modal-textfield">
+
+                        <label for="">Código</label>
+                        <input id="codigo" type="text" class="modal-campo" placeholder="">
+
+                    </div>
+
+                    <div class="modal-textfield">
+                        <label for="">Cidade</label>
+                        <input id="cidade" type="text" class="modal-campo" placeholder="">
+
+                    </div>
+
+                    <div class="modal-textfield">
+
+                        <label for="">Nome</label>
+                        <input id="nome" type="text" class="modal-campo" placeholder="">
+
+                    </div>
+                    
+                    <div class="modal-textfield">
+
+                        <label for="">CEP</label>
+                        <input id="cep" type="text" class="modal-campo" placeholder="">
+
+                    </div>
+                    
+
+
+                </form>
+                <footer class="modal-footer">
+
+                    <button class="botao cancelar" onclick="fecharModal()">Cancelar</button>
+
+                    <button id="btnSalvar" class="botao salvar" onclick="inserirLoja()">Salvar</button>
+
+                </footer>
+
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="agencias.js"></script>
+    
+</body>
+</html>
