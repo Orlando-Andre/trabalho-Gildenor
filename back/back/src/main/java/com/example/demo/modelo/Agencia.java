@@ -18,6 +18,8 @@ public class Agencia {
 	@Column
 	private String nome;
 	
+	
+	
 	@Column
 	private String cidade;
 	
