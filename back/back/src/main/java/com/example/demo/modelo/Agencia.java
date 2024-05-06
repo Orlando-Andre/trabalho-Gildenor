@@ -55,6 +55,4 @@ public class Agencia {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
-
 }

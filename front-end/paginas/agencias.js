@@ -29,7 +29,7 @@ function carregaTabela() {
 
       if(Object.keys(msg).length === 0) {
 
-        alert("Sem Lojas cadastradas");
+        alert("Sem Agencias cadastradas");
 
       }else {
 
@@ -56,11 +56,12 @@ function mostraLinhaTabela(data) {
   return (
 
     '<tr><td>' + data.nome + '</td>' + 
-    '<td>' + data.cnpj + '</td>'+
-    '<td>' + data.categoria.nome + '</td>'+
+    '<td>' + data.idAgencia + '</td>'+
+    '<td>' + data.cep + '</td>'+
+    '<td>' + data.cidade + '</td>'+
 
-    '<td><button class="botao editar" id="btnEditar" onclick="editar('+ data.idLoja +')">Editar</button>'+
-    '<button class="botao excluir" id="btnExcluir" onclick="excluir('+ data.idLoja + ')">Excluir</button></td></tr>'
+    '<td><button class="botao editar" id="btnEditar" onclick="editar('+ data.idAgencia +')">Editar</button>'+
+    '<button class="botao excluir" id="btnExcluir" onclick="excluir('+ data.idAgencia + ')">Excluir</button></td></tr>'
   );
 }
 
@@ -71,9 +72,9 @@ const abrirModal = () => document.getElementById('modal')
 const fecharModal = () => document.getElementById('modal')
 .classList.remove('ativo')
 
-document.getElementById('btnCadastrarLoja').addEventListener('click', function() {
+document.getElementById('btnCadastrarAgencia').addEventListener('click', function() {
+
   abrirModal();
-  preencheCmbCategoria();
 
 });
 
@@ -87,54 +88,8 @@ function limpaModal() {
 }
 
 
-//Consulta todas as categorias para preencher a combobox de cadastro de Lojas
-function preencheCmbCategoria() {
-
-  $.ajax({
-      
-    url:"http://localhost:" + porta + "/categoria/consultaTodos",
-    type: 'get',
-    data: {},
-
-    success: function(msg) {
-
-      if(Object.keys(msg).length === 0) {
-
-        alert("Sem Categorias cadastradas");
-
-      }else {
-
-        let opcoes;
-
-        for(let i = 0; i < msg.length; i++) { 
-          
-          opcoes += mostraLinhaCmbCategoria(msg[i]);
-
-        }  
-
-        //Adiciona as opcoes na combobox ala
-        $('#cmbCategoria').html(opcoes);
-      }
-
-    },
-    error: function(msg){
-      alert("Erro de busca...")
-    }
-  });
-
-}
-
-function mostraLinhaCmbCategoria(data) {
-  return (
-
-    '<option value="'+ data.idCategoria + '">' + data.nome +'</option>'
-    
-  );
-}
-
-
-//CRUD Lojas
-function validarDadosModalCadastroLoja(nome, cnpj) {
+//CRUD Agencia
+function validarDadosModalCadastroAgencia(nome, cidade, cep) {
 
   if(nome.length == 0 || nome == "") {
     alert("Informe um nome");
@@ -143,51 +98,63 @@ function validarDadosModalCadastroLoja(nome, cnpj) {
     campoNome.focus();
 
   } else {
+    
+    if(cidade.length == 0 || cidade == ""){
+      alert("Informe uma cidade");
 
-    //Valida se esta vazio
-    if(cnpj.length == 0 || cnpj == ""){
-      alert("Informe um CNPJ");
-
-      var campoCnpj = document.getElementById('cnpj');
-      campoCnpj.focus();
+      var campoCidade = document.getElementById('cidade');
+      campoCidade.focus();
 
     }else {
 
-      return true;
+      if(cep.length == 0 || cep == ""){
+        alert("Informe um CEP");
+  
+        var campoCep = document.getElementById('cep');
+        campoCep.focus();
+
+      } else {
+        return true;
+      }
     }
   }
 }
 
 //O botão salvar da Modal chama esse função - Inserir
-  function inserirLoja() {
+function inserirAgencia() {
 
-    if(tipo === "Administrador") {
+  //coloquei esse tipo so para teste
+  tipo = "Administrador";
 
-      let nome = $("#nome").val();
-      let cnpj = $("#cnpj").val();
-      let categoria = $("#cmbCategoria").val();
-    
-      var dadosValidados = validarDadosModalCadastroLoja(nome, cnpj);
+  if(tipo === "Administrador") {
 
-      if(dadosValidados == true) {
+    let codigo = $("#codigo").val();
+    let nome = $("#nome").val();
+    let cidade = $("#cidade").val();
+    let cep = $("#cep").val();
+
+    var dadosValidados = validarDadosModalCadastroAgencia(nome, cidade, cep);
+
+    if(dadosValidados == true) {
+
+      if(codigo==="") { 
 
         $.ajax({
-      
+    
           url:"http://localhost:" + porta + "/loja/inserir",
           type:'POST',
           data: JSON.stringify({
             nome: nome,
-            cnpj: cnpj,
-            categoria: {
-              idCategoria: categoria
-            }
+            cidade: cidade,
+            cep: cep
+            
           }),
       
           contentType:"application/json;charset=UTF-8",
       
           success: function(msg){
       
-            alert("Loja cadastrada com Sucesso!")
+            alert("Agencia cadastrada com Sucesso!")
       
             carregaTabela();
             limpaModal();
@@ -198,18 +165,47 @@ function validarDadosModalCadastroLoja(nome, cnpj) {
             alert("Erro de Inserção...")
           }
         });
-      }
+      } else {
 
-    }else{
-      alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+        // Editar
+        $.ajax({
+      
+          url:"http://localhost:" + porta + "/loja/atualizar",
+          type:'PUT',
+          data: JSON.stringify({
+              idAgencia:id,
+              nome: nome,
+              cidade: cidade,
+              cep: cep
+          }),
+      
+          contentType:"application/json;charset=UTF-8",
+      
+          success: function(msg) {
+      
+            alert("Agencia Atualizada com Sucesso!")
+      
+            carregaTabela();
+            limpaModal();
+            fecharModal();
+              
+          },
+          error: function(msg) {
+            alert("Erro de Atualização...")
+          }
+        });
+      }
     }
-  }  
+  } else {
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+  }
+}  
+
+
 
 
 //O botão editar da tabela chama essa função
 function editar(id) {
-
-  preencheCmbCategoria();
 
   if(tipo === "Administrador") {
     //ir no banco de dados pesquisar com o id
@@ -224,26 +220,17 @@ function editar(id) {
         //Preencher modal com os dados a serem editados
         if(Object.keys(msg).length === 0) {
 
-          alert("Loja não encontrada...")
+          alert("Agencia não encontrada...")
 
-        }else {
+        } else {
 
+          $("#codigo").val(msg.idAgencia);
           $("#nome").val(msg.nome);
-          $("#cnpj").val(msg.cnpj);
-
-          
-          //pegar id-Categoria
-          var categoria = msg.categoria
-          var idCategoria = categoria.idCategoria
-          $("#cmbCategoria").val(idCategoria)
+          $("#cidade").val(msg.cidade);
+          $("#cep").val(msg.cep);
 
           abrirModal();
 
-          //Troca a função a ser chamada pelo botão salvar da Modal
-          document.getElementById("btnSalvar").onclick = function() {
-            enviarDadosEditar(id);
-
-          }
         }
       },
 
@@ -253,52 +240,8 @@ function editar(id) {
 
     });
 
-  }else{
+  } else {
     alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
-  }
-}
-
-function enviarDadosEditar(id) {
-
-  let nome = $("#nome").val();
-  let cnpj = $("#cnpj").val();
-  let categoria = $("#cmbCategoria").val();
-  
-
-  var dadosValidados = validarDadosModalCadastroLoja(nome, cnpj);
-
-  if(dadosValidados == true) {
-
-    $.ajax({
-  
-      url:"http://localhost:" + porta + "/loja/atualizar",
-      type:'PUT',
-      data: JSON.stringify({
-          idLoja:id,
-          nome: nome,
-          cnpj: cnpj,
-          
-          categoria: {
-            idCategoria: categoria
-          }
-          
-      }),
-  
-      contentType:"application/json;charset=UTF-8",
-  
-      success: function(msg){
-  
-        alert("Loja Atualizada com Sucesso!")
-  
-        carregaTabela();
-        limpaModal();
-        fecharModal();
-          
-      },
-      error: function(msg) {
-        alert("Erro de Atualização...")
-      }
-    });
   }
 }
 
@@ -333,7 +276,6 @@ function excluir(id) {
 //Pesquisa complexa
 function pesquisaComplexa() {
 
-  let cmbPesquisa = $("#cmbPesquisaComplexa").val();
   let txtPesquisa = $("#pesquisa").val();
 
   if(txtPesquisa.length == 0 || txtPesquisa == "") {
@@ -343,93 +285,41 @@ function pesquisaComplexa() {
     var campoPesquisa = document.getElementById('pesquisa');
     campoPesquisa.focus();
 
-  }
-
-  if(cmbPesquisa === "nome"){
-
-    // chamar método que pesquisa com nome
-    pesquisaLojaNome(txtPesquisa);
-
   } else {
-    //cmbPesquisa === cnpj
 
-    //chamar método que pesquisa com cnpj
-    pesquisaLojaCnpj(txtPesquisa);
-
-  }
-}
-
-//Pesquisa Loja Por nome
-function pesquisaLojaNome(nome) {
+    
+    $.ajax({
+            
+      url:"http://localhost:"+ porta +"/loja/pesquisaComplexaNome/" + nome,
+      type: 'get',
+      data: {},
   
-  $.ajax({
+      success: function(msg) {
+  
+        if(Object.keys(msg).length === 0) {
+  
+          alert("Loja não encontrada...");
+  
+        } else {
+  
+          let linhas;
+  
+          for(let i = 0; i < msg.length; i++) { 
             
-    url:"http://localhost:"+ porta +"/loja/pesquisaComplexaNome/" + nome,
-    type: 'get',
-    data: {},
-
-    success: function(msg) {
-
-      if(Object.keys(msg).length === 0) {
-
-        alert("Loja não encontrada...");
-
-      } else {
-
-        let linhas;
-
-        for(let i = 0; i < msg.length; i++) { 
-          
-          linhas += mostraLinhaTabela(msg[i]);
-        }  
-
-        //Adiciona as linhas na tabela
-        $('#corpoTabela').html(linhas);
+            linhas += mostraLinhaTabela(msg[i]);
+          }  
+  
+          //Adiciona as linhas na tabela
+          $('#corpoTabela').html(linhas);
+        }
+  
+        document.getElementById("pesquisa").value = "";
+  
+      },
+      error: function(msg){
+        alert("Erro de Pesquisa...")
       }
-
-      document.getElementById("pesquisa").value = "";
-
-    },
-    error: function(msg){
-      alert("Erro de Pesquisa...")
-    }
-
-  });
-}
-
-//Pesquisa loja por cnpj
-function pesquisaLojaCnpj(cnpj){
-
-  $.ajax({
-            
-    url:"http://localhost:"+ porta +"/loja/pesquisaComplexaCnpj/" + cnpj,
-    type: 'get',
-    data: {},
-
-    success: function(msg) {
-
-      if(Object.keys(msg).length === 0) {
-
-        alert("Loja não encontrada...");
-
-      } else {
-
-        let linhas;
-
-        for(let i = 0; i < msg.length; i++) { 
-          
-          linhas += mostraLinhaTabela(msg[i]);
-        }  
-
-        //Adiciona as linhas na tabela
-        $('#corpoTabela').html(linhas);
-      }
-
-      document.getElementById("pesquisa").value = "";
-
-    },
-    error: function(msg){
-      alert("Erro de Pesquisa...")
-    }
-  });
+  
+    });
+  }
 }
