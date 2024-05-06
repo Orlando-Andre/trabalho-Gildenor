@@ -20,6 +20,10 @@ public class Agencia {
 	
 	
 	
+	
+	
+
+	
 	@Column
 	private String cidade;
 	
