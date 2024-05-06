@@ -202,8 +202,6 @@ function inserirAgencia() {
 }  
 
 
-
-
 //O botão editar da tabela chama essa função
 function editar(id) {
 
@@ -287,7 +285,7 @@ function pesquisaComplexa() {
 
   } else {
 
-    
+
     $.ajax({
             
       url:"http://localhost:"+ porta +"/loja/pesquisaComplexaNome/" + nome,
