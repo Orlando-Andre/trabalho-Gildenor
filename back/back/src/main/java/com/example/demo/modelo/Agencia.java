@@ -18,6 +18,12 @@ public class Agencia {
 	@Column
 	private String nome;
 	
+	
+	
+	
+	
+
+	
 	@Column
 	private String cidade;
 	
@@ -55,6 +61,4 @@ public class Agencia {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
-
 }
