@@ -48,6 +48,7 @@ main .head-main {
 main .head-main .div-pesquisa > input {
     width: 80%;
     margin-right: 11px;
+    color: black;
     background-color: white;
 }
 
@@ -94,12 +95,12 @@ main .botao.cadastrar:hover {
 }
 
 main .botao.verde {
-    background-color: #13CE66;
+    background-color: var(--azulEscuro);
     margin-right: 4px;
 }
 
 main .botao.verde:hover {
-    background-color: #01fd72d8;
+    background-color: var(--azulClaro);
     color: black;
 }
 
@@ -127,7 +128,7 @@ main .botao.vermelho:hover {
 }
 
 .tabela tr{
-    background-color: white;
+    background-color: var(--azulClaro);
 }
 
 .tabela tr:hover{
@@ -222,6 +223,7 @@ main .botao.vermelho:hover {
     background-color: var(--azulEscuro);
     color: white;
 }
+
 
 .modal-campo #codigo, .modal-campo #cmbTipoUsuario, .modal-campo #nome, .modal-campo #cmbAgencia {
     background-color: var(--azulEscuro);

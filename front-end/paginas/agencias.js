@@ -1,4 +1,4 @@
-const porta = 9595
+const porta = 1010
 
 var tipo;
 
@@ -21,7 +21,7 @@ function carregaTabela() {
           
   $.ajax({
     
-    url:"http://localhost:" + porta + "/loja/consultaTodos",
+    url:"http://localhost:" + porta + "/agencia/carregarTabela",
     type: 'get',
     data: {},
 
@@ -29,7 +29,7 @@ function carregaTabela() {
 
       if(Object.keys(msg).length === 0) {
 
-        alert("Sem Lojas cadastradas");
+        alert("Sem agências cadastradas");
 
       }else {
 
@@ -56,11 +56,11 @@ function mostraLinhaTabela(data) {
   return (
 
     '<tr><td>' + data.nome + '</td>' + 
-    '<td>' + data.cnpj + '</td>'+
-    '<td>' + data.categoria.nome + '</td>'+
+    '<td>' + data.cidade + '</td>'+
+    '<td>' + data.cep + '</td>'+
 
-    '<td><button class="botao editar" id="btnEditar" onclick="editar('+ data.idLoja +')">Editar</button>'+
-    '<button class="botao excluir" id="btnExcluir" onclick="excluir('+ data.idLoja + ')">Excluir</button></td></tr>'
+    '<td><button class="botao editar" id="btnEditar" onclick="editar('+ data.idAgencia +')">Editar</button>'+
+    '<button class="botao excluir" id="btnExcluir" onclick="excluir('+ data.idAgencia + ')">Excluir</button></td></tr>'
   );
 }
 
@@ -71,7 +71,7 @@ const abrirModal = () => document.getElementById('modal')
 const fecharModal = () => document.getElementById('modal')
 .classList.remove('ativo')
 
-document.getElementById('btnCadastrarLoja').addEventListener('click', function() {
+document.getElementById('btnCadastrarAgencia').addEventListener('click', function() {
   abrirModal();
   preencheCmbCategoria();
 

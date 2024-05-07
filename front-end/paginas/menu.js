@@ -79,7 +79,7 @@ iframe.src = url;
 //Abrir tela de cadastro dos Usuários
 function abrirCadastroUsuario() {
 
-const url = 'cadastrarUsuario.html?tipo=' + tipo;
+const url = 'usuarios.html?tipo=' + tipo;
 
 // Obtenha a referência ao elemento iframe
 const iframe = document.querySelector('.iframe-Content');
@@ -94,7 +94,7 @@ iframe.src = url;
 //Abrir tela de cadastro de Loja
 function abrirCadastroLoja() {
 
-const url = 'cadastrarLoja.html?tipo=' + tipo;
+const url = 'agencias.html?tipo=' + tipo;
 
 // Obtenha a referência ao elemento iframe
 const iframe = document.querySelector('.iframe-Content');

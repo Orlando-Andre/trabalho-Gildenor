@@ -1,4 +1,4 @@
-const porta = 9595
+const porta = 1010
 
 var tipo;
 
@@ -20,7 +20,7 @@ function carregaTabela() {
           
     $.ajax({
       
-      url:"http://localhost:" + porta + "/usuario/consultaTodos",
+      url:"http://localhost:" + porta + "/usuario/carregarTabela",
       type: 'get',
       data: {},
 
@@ -53,8 +53,8 @@ function carregaTabela() {
 
   function mostraLinhaTabela(data) {
     return (
-      '<tr><td>' + data.nome + '</td>' + 
-      '<td>' + data.email + '</td>'+
+      '<tr><td>' + data.idUsuario + '</td>' + 
+      '<td>' + data.nome + '</td>'+
       '<td>' + data.tipo + '</td>'+
 
       '<td><button class="botao verde" id="btnEditar" onclick="editar('+ data.idUsuario +')">Editar</button>'+
@@ -76,6 +76,56 @@ document.getElementById('btnCadastrarUsuario')
 document.getElementById('modalFechar')
   .addEventListener('click' , fecharModal)
 
+document.getElementById('btnCadastrarUsuario').addEventListener('click', function() {
+  abrirModal();
+  preencheCmbAgencia();
+  
+});
+
+//Consulta todas as categorias para preencher a combobox de cadastro de Lojas
+function preencheCmbAgencia() {
+
+  $.ajax({
+      
+    url:"http://localhost:" + porta + "/agencia/carregarTabela",
+    type: 'get',
+    data: {},
+
+    success: function(msg) {
+
+      if(Object.keys(msg).length === 0) {
+
+        alert("Sem agências cadastradas");
+
+      }else {
+
+        let opcoes;
+
+        for(let i = 0; i < msg.length; i++) { 
+          
+          opcoes += mostraLinhaCmbAgencia(msg[i]);
+
+        }  
+
+        //Adiciona as opcoes na combobox ala
+        $('#cmbAgencia').html(opcoes);
+      }
+
+    },
+    error: function(msg){
+      alert("Erro de busca...")
+    }
+  });
+}
+
+function mostraLinhaCmbAgencia(data) {
+  return (
+
+    '<option value="'+ data.idAgencia + '">' + data.nome +'</option>'
+    
+  );
+}
+
 
 function limpaModal() {
   document.getElementById("nome").value = "";
@@ -86,7 +136,7 @@ function limpaModal() {
 
 
 // CRUD Usuário
-function validarDadosModalCadastroUsuario(nome, senha, email) {
+function validarDadosModalCadastroUsuario(nome, senha) {
 
   if(nome.length == 0 || nome == "") {
     alert("Informe um nome");
@@ -101,25 +151,8 @@ function validarDadosModalCadastroUsuario(nome, senha, email) {
       var campoSenha = document.getElementById('senha');
       campoSenha.focus();
 
-    } else {
-    
-      //Validar email
-
-      // Expressão regular para validar e-mail
-       var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      // Testa o formato do e-mail
-      if (!regex.test(email)) {
-
-        // E-mail inválido
-        alert('Informe um E-mail válido!');
-
-        var campoEmail = document.getElementById('email');
-        campoEmail.focus();
-
-      } else {
-        return true;
-      }
+    } else {    
+      return true;
     }
   }
 }
@@ -130,11 +163,11 @@ function inserirUsuario() {
   if(tipo === "Administrador") {
 
     let nome = $("#nome").val();
-    let email = $("#email").val();
     let senha = $("#senha").val();
     let tipo = $("#cmbTipoUsuario").val();
+    let agencia = $("#cmbAgencia").val();
 
-    var dadosValidados = validarDadosModalCadastroUsuario(nome, senha, email);
+    var dadosValidados = validarDadosModalCadastroUsuario(nome, senha);
 
     if(dadosValidados == true) {
 
@@ -145,15 +178,17 @@ function inserirUsuario() {
         data: JSON.stringify({
             nome: nome,
             senha: senha,
-            email: email,
-            tipo: tipo
+            tipo: tipo,
+            agencia: {
+              idAgencia: agencia
+            }
         }),
     
         contentType:"application/json;charset=UTF-8",
     
         success: function(msg){
     
-          alert("Usuario cadastrado com Sucesso!")
+          alert("Usuário cadastrado com sucesso!")
     
           carregaTabela();
           limpaModal();
@@ -181,7 +216,7 @@ function editar(id) {
     //ir no banco de dados pesquisar com o id
     $.ajax({
                 
-      url:"http://localhost:" + porta + "/usuario/consultaPorId/" + id,
+      url:"http://localhost:" + porta + "/usuario/pesquisarPorId/" + id,
       type: 'get',
       data: {},
       
@@ -196,8 +231,7 @@ function editar(id) {
 
           $("#nome").val(msg.nome);
           $("#senha").val(msg.senha);
-          $("#email").val(msg.email);
-
+          
           if(msg.tipo === "Administrador"){
             document.getElementById("cmbTipoUsuario").selectedIndex = 0;
           }else{
@@ -233,11 +267,11 @@ function editar(id) {
 function enviarDadosEditar(id) {
 
   let nome = $("#nome").val();
-  let email = $("#email").val();
   let senha = $("#senha").val();
   let tipo = $("#cmbTipoUsuario").val();
+  let agencia = $("#cmbAgencia").val();
 
-  var dadosValidados = validarDadosModalCadastroUsuario(nome, senha, email);
+  var dadosValidados = validarDadosModalCadastroUsuario(nome, senha);
 
   if(dadosValidados == true) {
 
@@ -246,18 +280,21 @@ function enviarDadosEditar(id) {
       url:"http://localhost:" + porta + "/usuario/atualizar",
       type:'PUT',
       data: JSON.stringify({
+
           idUsuario:id,
           nome: nome,
           senha: senha,
-          email: email,
-          tipo: tipo
+          tipo: tipo, 
+          agencia: {
+            idAgencia: agencia
+          }
       }),
   
       contentType:"application/json;charset=UTF-8",
   
       success: function(msg){
   
-        alert("Usuario alterado com sucesso!")
+        alert("Usuário alterado com sucesso!")
   
         carregaTabela();
         limpaModal();
