@@ -144,6 +144,7 @@ main .botao.cadastrar:hover {
 
 main .botao.editar {
     background-color: var(--azulEscuro);
+    margin-right: 4px;
 
 }
 
