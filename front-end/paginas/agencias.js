@@ -140,7 +140,7 @@ function inserirAgencia() {
 
         $.ajax({
     
-          url:"http://localhost:" + porta + "/loja/inserir",
+          url:"http://localhost:" + porta + "/agencia/inserir",
           type:'POST',
           data: JSON.stringify({
             nome: nome,
@@ -169,10 +169,10 @@ function inserirAgencia() {
         // Editar
         $.ajax({
       
-          url:"http://localhost:" + porta + "/loja/atualizar",
+          url:"http://localhost:" + porta + "/agencia/atualizar",
           type:'PUT',
           data: JSON.stringify({
-              idAgencia:id,
+              idAgencia: codigo,
               nome: nome,
               cidade: cidade,
               cep: cep
@@ -204,11 +204,14 @@ function inserirAgencia() {
 //O botão editar da tabela chama essa função
 function editar(id) {
 
+  //coloquei esse tipo so para teste
+  tipo = "Administrador";
+
   if(tipo === "Administrador") {
     //ir no banco de dados pesquisar com o id
     $.ajax({
                 
-      url:"http://localhost:" + porta + "/loja/consultaPorId/" + id,
+      url:"http://localhost:" + porta + "/agencia/pesquisar/" + id,
       type: 'get',
       data: {},
       
@@ -246,10 +249,13 @@ function editar(id) {
 //Excluir
 function excluir(id) {
 
+  //coloquei esse tipo so para teste
+  tipo = "Administrador";
+
   if(tipo === "Administrador") {
     $.ajax({
 
-      url:"http://localhost:" + porta + "/loja/excluir/" + id,
+      url:"http://localhost:" + porta + "/agencia/excluir/" + id,
       type: 'delete',
       data : {},
   
@@ -270,8 +276,8 @@ function excluir(id) {
 
 }
 
-//Pesquisa complexa
-function pesquisaComplexa() {
+//Pesquisa Simples pelo nome
+function pesquisaSimples() {
 
   let txtPesquisa = $("#pesquisa").val();
 
@@ -287,7 +293,7 @@ function pesquisaComplexa() {
 
     $.ajax({
             
-      url:"http://localhost:"+ porta +"/loja/pesquisaComplexaNome/" + nome,
+      url:"http://localhost:"+ porta +"/agencia/pesquisaSimplesNome/" + txtPesquisa,
       type: 'get',
       data: {},
   
@@ -295,7 +301,7 @@ function pesquisaComplexa() {
   
         if(Object.keys(msg).length === 0) {
   
-          alert("Loja não encontrada...");
+          alert("Agência não encontrada...");
   
         } else {
   
