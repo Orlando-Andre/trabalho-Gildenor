@@ -61,6 +61,19 @@ iframe.src = URL;
 
 }
 
+//Abrir tela de cadastro de Loja
+function abrirAtualizarRastreio() {
+
+    const url = 'atualizarRastreio.html?tipo=' + tipo;
+    
+    // Obtenha a referência ao elemento iframe
+    const iframe = document.querySelector('.iframe-Content');
+    iframe.classList.toggle('ativo')
+    
+    //Defina a URL do iframe para carregar o conteúdo do arquivo HTML
+    iframe.src = url;
+}
+
 //Abrir tela de cadastro dos Usuários
 function abrirRelatorio() {
 
