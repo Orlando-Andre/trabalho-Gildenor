@@ -19,11 +19,6 @@ public class Agencia {
 	private String nome;
 	
 	
-	
-	
-	
-
-	
 	@Column
 	private String cidade;
 	

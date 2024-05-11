@@ -16,34 +16,45 @@ public class AgenciaService {
 	@Autowired
 	private AgenciaDao agenciaDao;
 	
+	
 	public Agencia inserirAgencia(Agencia a) {
 		return agenciaDao.save(a);
 	}
-
-	public List<Agencia> getAllAgenciaByNomeAndCidade(Agencia a) {
-		return agenciaDao.findAgenciaByNomeAndCidade(a.getNome(), a.getCidade());
-	}
-
-	public List<Agencia> getAllAgencia() {
-		return (List<Agencia>) agenciaDao.findAll();
+	
+	public Agencia updateAgencia(Agencia a) {
+		return agenciaDao.save(a);
 	}
 	
 	public void excluir(Long idAgencia) {
 		agenciaDao.deleteById(idAgencia);
 	}
-
+	
+	public List<Agencia> getAllAgencia() {
+		return (List<Agencia>) agenciaDao.findAll();
+	}
+	
 	public Optional<Agencia> pesquisarId(Long idAgencia) {
 		return agenciaDao.findById(idAgencia);
+	}
+	
+	public List<Agencia> getAllAgenciaByNome(String nome) {
+		return agenciaDao.findAgenciaByNomeContaining(nome);
+	}
+	
+	
+	
+	
+	
+	
+	
+	public List<Agencia> getAllAgenciaByNomeAndCidade(Agencia a) {
+		return agenciaDao.findAgenciaByNomeAndCidade(a.getNome(), a.getCidade());
 	}
 
 	public List<Agencia> buscarPorLetra(String letra) {
         return agenciaDao.findByNomeStartingWithIgnoreCase(letra);
     }
 	
-	public Agencia updateAgencia(Agencia a) {
-		return agenciaDao.save(a);
-	}
-
 	public List<Agencia> pesquisarPorId(Long idAgencia) {
 		return agenciaDao.findAllByIdAgencia(idAgencia);
 	}

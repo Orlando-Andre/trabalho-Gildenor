@@ -20,7 +20,7 @@
 
     </header>
 
-    <main class="main">
+    <main class="main" id="main">
 
         <div class="box">
 
@@ -67,11 +67,10 @@
 
             <div class="textfield-rastreio">
                 <label class="lblCodigoRastreio" for="peso">Código de rastreio</label>
-                <input placeholder="AA123456789BR" class="campoCodigoRastreio" type="text">
+                <input id="codigoRastreio" placeholder="AA123456789BR" class="campoCodigoRastreio" type="text">
             </div>
-            
 
-            <button class="botao verde" id="btnRastrear" type="button" onclick="popUpRastrear()">Rastrear</button>
+            <button class="botao verde" id="btnRastrear" type="button" onclick="validaDadosRastreamento()">Rastrear</button>
 
         </div>
 

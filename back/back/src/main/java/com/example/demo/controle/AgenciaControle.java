@@ -26,19 +26,15 @@ public class AgenciaControle {
 	@Autowired
 	private AgenciaService agenciaService;
 	
-	@PostMapping(path="/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Agencia> pesquisarAgencia(@RequestBody Agencia a) {
-		return agenciaService.getAllAgenciaByNomeAndCidade(a);
-	}
-	
-	@GetMapping("/carregarTabela")
-	public List<Agencia> getAllAgencia(){
-		return agenciaService.getAllAgencia();
-	}
 	
 	@PostMapping(path="/inserir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Agencia inserirAgencia(@RequestBody Agencia a) {
 		return agenciaService.inserirAgencia(a);
+	}
+	
+	@PutMapping("/atualizar")
+	public Agencia updateAgencia(@RequestBody Agencia a) {
+		return agenciaService.updateAgencia(a);
 	}
 	
 	@DeleteMapping("/excluir/{idAgencia}")
@@ -46,15 +42,27 @@ public class AgenciaControle {
 		agenciaService.excluir(idAgencia);
     }
 	
+	@GetMapping("/carregarTabela")
+	public List<Agencia> getAllAgencia(){
+		return agenciaService.getAllAgencia();
+	}
+	
+	
 	@GetMapping("/pesquisar/{idAgencia}") 
 	public Optional<Agencia> pesquisar(@PathVariable Long idAgencia) {
 		return agenciaService.pesquisarId(idAgencia);
 	}
 	
-	@PutMapping("/atualizar")
-	public Agencia updateAgencia(@RequestBody Agencia a) {
-		return agenciaService.updateAgencia(a);
+	
+	@GetMapping("/pesquisaSimplesNome/{nome}")
+	public List<Agencia> getAgenciaByNome(@PathVariable String nome) {
+		return agenciaService.getAllAgenciaByNome(nome);
 	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/pesquisaSimples/{letra}")
     public List<Agencia> buscarPorLetra(@PathVariable String letra) {
@@ -65,4 +73,9 @@ public class AgenciaControle {
     public List<Agencia> pesquisarPorId(@PathVariable Long idAgencia) {
         return agenciaService.pesquisarPorId(idAgencia);
     }
+	
+	@PostMapping(path="/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Agencia> pesquisarAgencia(@RequestBody Agencia a) {
+		return agenciaService.getAllAgenciaByNomeAndCidade(a);
+	}
 }
