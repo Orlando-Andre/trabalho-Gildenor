@@ -1,6 +1,7 @@
 const porta = 1010
 
 var tipo;
+var numeroLinha = 0;
 
 $(document).ready(function() {
 
@@ -38,7 +39,8 @@ function validarCodigoRastreio() {
 
 //Pesquisa Simples
 function pesquisaSimples() {
-  
+
+    numeroLinha = 0;
     let txtPesquisa = $("#pesquisa").val();
   
     if(txtPesquisa.length == 0 || txtPesquisa == "") {
@@ -60,13 +62,15 @@ function pesquisaSimples() {
           if(Object.keys(msg).length === 0) {
   
             alert("Código de rastreio não encontrado...");
+            linhas = '<tr><td>'  + "    " + '</td></tr>'
+            //Adiciona as linhas na tabela
+            $('#corpoTabela').html(linhas);
   
           } else {
   
             let linhas;
   
-            for(let i = 0; i < msg.length; i++) { 
-              
+            for(let i = 0; i < msg.length; i++) {
               linhas += mostraLinhaTabela(msg[i]);
             }  
   
@@ -86,8 +90,9 @@ function pesquisaSimples() {
 }
 
 function mostraLinhaTabela(data) {
-    return (
-      '<tr>' + data.descricao + '</tr>'
+  numeroLinha ++;
+    return ( 
+      '<tr><td>'  + numeroLinha + '. ' + data.descricao + '</td></tr>'
     );
 }
   
