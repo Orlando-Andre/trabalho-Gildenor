@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class Gerar_envio {
+public class GerarEnvio {
 	
 	
 	@Id
@@ -21,6 +21,8 @@ public class Gerar_envio {
 	
 	@Column
 	private String uf_destinatario;
+	
+	
 
 	public Long getIdEnvio() {
 		return idEnvio;
@@ -46,8 +48,4 @@ public class Gerar_envio {
 		this.uf_destinatario = uf_destinatario;
 	}
 	
-	
-	
-	
-
 }

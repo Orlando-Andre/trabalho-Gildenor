@@ -19,10 +19,17 @@ public class Status {
 	
 	@Column
 	private String descricao;
+
+	
+	@ManyToOne
+	@JoinColumn(name="id_envio")
+    private GerarEnvio gerarEnvio;
+
 	
 	public Long getIdStatus() {
 		return idStatus;
 	}
+
 
 	public void setIdStatus(Long idStatus) {
 		this.idStatus = idStatus;
@@ -36,18 +43,13 @@ public class Status {
 		this.descricao = descricao;
 	}
 
-	public Gerar_envio getGerarEnvio() {
+	public GerarEnvio getGerar_envio() {
 		return gerarEnvio;
 	}
 
-	public void setGerarEnvio(Gerar_envio gerarEnvio) {
+	public void setGerar_envio(GerarEnvio gerarEnvio) {
 		this.gerarEnvio = gerarEnvio;
 	}
-
-	@ManyToOne
-	@JoinColumn(name="id_envio")
-    private Gerar_envio gerarEnvio;
-	
 	
 
 	
