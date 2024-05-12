@@ -26,6 +26,10 @@ public class Status {
     private GerarEnvio gerarEnvio;
 
 	
+	@ManyToOne
+	@JoinColumn(name="id_envio")
+    private Gerar_envio gerarEnvio;
+	
 	public Long getIdStatus() {
 		return idStatus;
 	}

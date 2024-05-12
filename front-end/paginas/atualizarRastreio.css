@@ -53,7 +53,7 @@ body {
 }
 
 .rastreio .codigo {
-    margin-left: 200px;
+    margin-left: 80px;
 }
 
 .pesquisa {
@@ -97,24 +97,33 @@ body {
     border-radius: 55px;
     padding: 35px;
     height: 80%;
+    margin-top: 10px;
+    color: white;
+}
+
+#corpoTabela {
+    border-radius: 55px;
+    padding: 35px;
+    height: 60%;
     margin-top: 20px;
+    color: white;
 }
 
 .direita {
     width: 45%;
-    height: 91%;
+    height: 97%;
     background-color: var(--azulClaro);
     border-radius: 55px;
 }
 
 .titulo-principal{
-    margin-top: 50px;
-    margin-left: 190px;
+    margin-top: 30px;
+    margin-left: 85px;
 }
 
 .subtitulo-atual {
-    margin-top: 60px;
-    margin-left: 260px;
+    margin-top: 30px;
+    margin-left: 165px;
 }
 
 .agencia {
@@ -124,52 +133,52 @@ body {
 
 .agencia .label-agencia {
     margin-top: 15px;
-    margin-left: 100px;
+    margin-left: 40px;
     font-size: 20px;
 }
 
 .comb-agencia {
     margin-top: 15px;
     margin-left: 10px;
-    width: 300px;
+    width: 220px;
 }
 
 .agencia .label-status {
     margin-top: 10px;
-    margin-left: 100px;
+    margin-left: 40px;
     font-size: 20px;
 }
 
 .agencia .comb-status {
     margin-top: 10px;
     margin-left: 26px;
-    width: 300px;
+    width: 220px;
 }
 
 .subtitulo-destino {
-    margin-top: 60px;
-    margin-left: 245px;
+    margin-top: 50px;
+    margin-left: 150px;
 }
 
 .agencia-destino {
     margin-top: 15px;
-    margin-left: 100px;
+    margin-left: 40px;
     font-size: 20px;
 }
 
 .comb-agencia-destino {
     margin-top: 15px;
     margin-left: 10px;
-    width: 300px;
+    width: 220px;
 }
 
 .botao {
     background-color: var(--verde);
     width: 200px;
-    height: 45px;
+    height: 35px;
     font-size: 1.5rem;
     position: absolute;
-    top: 90%;
+    top: 91%;
     left: 50%;
     transform: translate(-50%,-50%);
     border-radius: 25px;
