@@ -19,21 +19,17 @@ public class Status {
 	
 	@Column
 	private String descricao;
-
 	
 	@ManyToOne
 	@JoinColumn(name="id_envio")
     private GerarEnvio gerarEnvio;
-
 	
-	@ManyToOne
-	@JoinColumn(name="id_envio")
-    private Gerar_envio gerarEnvio;
+	
+	
 	
 	public Long getIdStatus() {
 		return idStatus;
 	}
-
 
 	public void setIdStatus(Long idStatus) {
 		this.idStatus = idStatus;
@@ -54,7 +50,4 @@ public class Status {
 	public void setGerar_envio(GerarEnvio gerarEnvio) {
 		this.gerarEnvio = gerarEnvio;
 	}
-	
-
-	
 }
