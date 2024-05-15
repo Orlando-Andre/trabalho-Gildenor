@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.dao.GerarEnvioDao;
 import com.example.demo.dao.UsuarioDao;
 import com.example.demo.modelo.Agencia;
-import com.example.demo.modelo.Gerar_envio;
+import com.example.demo.modelo.GerarEnvio;
 
 @Component
 public class GerarEnvioService {
@@ -16,7 +16,7 @@ public class GerarEnvioService {
 	@Autowired
 	private GerarEnvioDao envioDao;
 	
-	public Optional<Gerar_envio> pesquisarId(Long idEnvio) {
+	public Optional<GerarEnvio> pesquisarId(Long idEnvio) {
 		return envioDao.findById(idEnvio);
 	}
 }

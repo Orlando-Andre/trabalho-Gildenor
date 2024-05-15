@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.modelo.Gerar_envio;
+import com.example.demo.modelo.GerarEnvio;
 import com.example.demo.service.GerarEnvioService;
 
 @RestController
@@ -21,7 +21,7 @@ public class GerarEnvioControle {
 	private GerarEnvioService envioService;
 	
 	@GetMapping("/pesquisar/{idEnvio}") 
-	public Optional<Gerar_envio> pesquisar(@PathVariable Long idEnvio) {
+	public Optional<GerarEnvio> pesquisar(@PathVariable Long idEnvio) {
 		return envioService.pesquisarId(idEnvio);
 	}
 

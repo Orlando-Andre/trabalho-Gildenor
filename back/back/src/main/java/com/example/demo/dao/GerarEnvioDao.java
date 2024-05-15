@@ -2,8 +2,8 @@ package com.example.demo.dao;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.demo.modelo.Gerar_envio;
+import com.example.demo.modelo.GerarEnvio;
 
-public interface GerarEnvioDao extends CrudRepository<Gerar_envio, Long> {
+public interface GerarEnvioDao extends CrudRepository<GerarEnvio, Long> {
 
 }
