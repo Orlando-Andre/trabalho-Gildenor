@@ -8,6 +8,7 @@ $(document).ready(function() {
   tipo = obterParametroDaURL('tipo');
 
   carregaTabela();
+  preencheCmbAgencia();
 
 });
 
@@ -77,12 +78,22 @@ document.getElementById('modalFechar')
   .addEventListener('click' , fecharModal)
 
 document.getElementById('btnCadastrarUsuario').addEventListener('click', function() {
+  limpaModal();
   abrirModal();
   preencheCmbAgencia();
   
 });
 
-//Consulta todas as categorias para preencher a combobox de cadastro de Lojas
+
+function limpaModal() {
+
+  $("#nome").val("");
+  $("#senha").val("");
+  $("#cmbAgencia").val("");
+  
+}
+
+//Consulta todas as agências para preencher a combobox de agências
 function preencheCmbAgencia() {
 
   $.ajax({
@@ -107,7 +118,7 @@ function preencheCmbAgencia() {
 
         }  
 
-        //Adiciona as opcoes na combobox ala
+        //Adiciona as opcoes na combobox 
         $('#cmbAgencia').html(opcoes);
       }
 
@@ -124,14 +135,6 @@ function mostraLinhaCmbAgencia(data) {
     '<option value="'+ data.idAgencia + '">' + data.nome +'</option>'
     
   );
-}
-
-
-function limpaModal() {
-  document.getElementById("nome").value = "";
-  document.getElementById("senha").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("cmbTipoUsuario").selectedIndex = 0;
 }
 
 
@@ -167,6 +170,7 @@ function inserirUsuario() {
     let tipo = $("#cmbTipoUsuario").val();
     let agencia = $("#cmbAgencia").val();
 
+
     var dadosValidados = validarDadosModalCadastroUsuario(nome, senha);
 
     if(dadosValidados == true) {
@@ -193,7 +197,7 @@ function inserirUsuario() {
           carregaTabela();
           limpaModal();
           fecharModal();
-            
+           
         },
         error: function(msg) {
           alert("Erro de Inserção...")
@@ -211,12 +215,13 @@ function inserirUsuario() {
 //O botão editar da tabela chama essa função
 function editar(id) {
 
+  limpaModal();
   if(tipo === "Administrador") {
 
     //ir no banco de dados pesquisar com o id
     $.ajax({
                 
-      url:"http://localhost:" + porta + "/usuario/pesquisarPorId/" + id,
+      url:"http://localhost:" + porta + "/usuario/pesquisar/" + id,
       type: 'get',
       data: {},
       
@@ -225,7 +230,7 @@ function editar(id) {
         //Preencher modal com os dados a serem editados
         if(Object.keys(msg).length === 0) {
 
-          alert("Usuario não encontrado...")
+          alert("Usuário não encontrado...")
 
         }else {
 
@@ -238,8 +243,21 @@ function editar(id) {
             document.getElementById("cmbTipoUsuario").selectedIndex = 1;
           }
           
+          //pegar id_agencia
+          var agencia = msg.agencia
+          alert("Nome da agência: " + agencia.nome);
+
+          var idAgencia = agencia.idAgencia;
+          var nomeAgencia = agencia.nome;
+
+          alert("Código da agência: " + idAgencia);
+          
+          $('#cmbAgencia').val(idAgencia);
+
 
           abrirModal();
+          $('#cmbAgencia').val(idAgencia);
+          
 
           //Troca a função a ser chamada pelo botão salvar da Modal
 
@@ -363,6 +381,11 @@ function pesquisaSimples() {
         if(Object.keys(msg).length === 0) {
 
           alert("Usuário não encontrado...");
+
+          linhas = '<td>'  + "    " + '</tr>'
+
+          //Adiciona as linhas na tabela
+          $('#corpoTabela').html(linhas);
 
         } else {
 

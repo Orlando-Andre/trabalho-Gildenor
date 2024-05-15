@@ -8,6 +8,8 @@ $(document).ready(function() {
   //Pega o tipo de usuario - Administrador ou padrão
   tipo = obterParametroDaURL('tipo');
 
+  preencheCmbAgencia();
+
 });
 
 function obterParametroDaURL(parametro) {
@@ -50,35 +52,76 @@ function pesquisaSimples() {
       campoPesquisa.focus();
   
     } else {
-  
+
+      alert("Entrou no else");
+
+      // pesquisar se aquele código foi realmente gerado
       $.ajax({
                 
-        url:"http://localhost:"+ porta +"/rastreio/pesquisar/" + txtPesquisa,
+        url:"http://localhost:"+ porta +"/envios/pesquisar/" + txtPesquisa,
         type: 'get',
         data: {},
   
         success: function(msg) {
+
+          alert("Entrou no success");
+          alert(msg);
   
-          if(Object.keys(msg).length === 0) {
+          if(Object.keys(msg).length === 0 || msg === "null") {
   
-            alert("Código de rastreio não encontrado...");
+            alert("Esse código não existe");
+
             linhas = '<tr><td>'  + "    " + '</td></tr>'
+
             //Adiciona as linhas na tabela
             $('#corpoTabela').html(linhas);
+
+            document.getElementById("pesquisa").value = "";
   
           } else {
-  
-            let linhas;
-  
-            for(let i = 0; i < msg.length; i++) {
-              linhas += mostraLinhaTabela(msg[i]);
-            }  
-  
-            //Adiciona as linhas na tabela
-            $('#corpoTabela').html(linhas);
+
+            alert("Entrou no segundo else");
+
+            // pesquisar o rastreiamento do código digitado 
+            $.ajax({
+                        
+              url:"http://localhost:"+ porta +"/rastreio/pesquisar/" + txtPesquisa,
+              type: 'get',
+              data: {},
+        
+              success: function(msg) {
+        
+                if(Object.keys(msg).length === 0) {
+        
+                  alert("Nenhuma informação desse código foi inserida");
+
+                  linhas = '<tr><td>'  + "    " + '</td></tr>'
+
+                  //Adiciona as linhas na tabela
+                  $('#corpoTabela').html(linhas);
+
+                  // document.getElementById("pesquisa").value = "";
+        
+                } else {
+        
+                  let linhas;
+        
+                  for(let i = 0; i < msg.length; i++) {
+                    linhas += mostraLinhaTabela(msg[i]);
+                  }  
+        
+                  //Adiciona as linhas na tabela
+                  $('#corpoTabela').html(linhas);
+                }
+        
+              },
+              error: function(msg){
+                alert("Erro de Pesquisa...")
+              }
+        
+            });
+
           }
-  
-          document.getElementById("pesquisa").value = "";
   
         },
         error: function(msg){
@@ -86,6 +129,7 @@ function pesquisaSimples() {
         }
   
       });
+
     }
 }
 
@@ -94,5 +138,103 @@ function mostraLinhaTabela(data) {
     return ( 
       '<tr><td>'  + numeroLinha + '. ' + data.descricao + '</td></tr>'
     );
+}
+
+
+//Consulta todas as agências para preencher a combobox de agências
+function preencheCmbAgencia() {
+
+  $.ajax({
+      
+    url:"http://localhost:" + porta + "/agencia/carregarTabela",
+    type: 'get',
+    data: {},
+
+    success: function(msg) {
+
+      if(Object.keys(msg).length === 0) {
+
+        alert("Sem agências cadastradas");
+
+      }else {
+
+        let opcoes;
+
+        for(let i = 0; i < msg.length; i++) { 
+          
+          opcoes += mostraLinhaCmbAgencia(msg[i]);
+
+        }  
+
+        //Adiciona as opcoes na combobox 
+        $('#cmbAgencia').html(opcoes);
+        $('#cmbAgenciaDestino').html(opcoes);
+      }
+
+    },
+    error: function(msg){
+      alert("Erro de busca...")
+    }
+  });
+}
+
+function mostraLinhaCmbAgencia(data) {
+  return (
+
+    '<option value="'+ data.idAgencia + '">' + data.nome +'</option>'
+    
+  );
+}
+
+function atualizarRastreio() {
+
+  let codigoEnvio = $("#pesquisa").val();
+
+  let codigoAgenciaAtual = $("#cmbAgencia").val();
+  let nomeAgenciaAtual = $("#cmbAgencia option:selected").text();
+
+  let status = $("#comboboxStatus").val();
+
+  let codigoAgenciaDestino = $("#cmbAgenciaDestino").val();
+  let nomeAgenciaDestino = $("#cmbAgenciaDestino option:selected").text();
+
+  let descricao = "Transferindo da " + nomeAgenciaAtual + " " + "para" + " " + nomeAgenciaDestino;
+
+
+  if(tipo === "Administrador") {
+
+    $.ajax({
+    
+      url:"http://localhost:" + porta + "/rastreio/atualizar",
+      type:'POST',
+      data: JSON.stringify({
+          
+        descricao: descricao,
+        gerarEnvio: {
+          idEnvio: codigoEnvio
+        }
+
+      }),
+  
+      contentType:"application/json;charset=UTF-8",
+  
+      success: function(msg){
+  
+        alert("Rastreio atualizado com sucesso!")
+  
+        pesquisaSimples();
+        limpaModal();
+        fecharModal();
+          
+      },
+      error: function(msg) {
+        alert("Erro de Inserção...")
+      }
+    });
+
+  }else{
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+  }
+
 }
   

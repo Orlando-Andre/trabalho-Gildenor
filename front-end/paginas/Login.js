@@ -49,6 +49,7 @@ function enviaDadosLogin(nome,senha) {
                 //Chamar tela do menu
                 // Altere a propriedade 'href' do objeto location para a URL da outra tela passando as informações do user
                 window.location.href = URL;
+            
             }
            
         },

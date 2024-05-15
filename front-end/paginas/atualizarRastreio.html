@@ -47,15 +47,15 @@
             
             <div class="agencia">
                 <label class="label-agencia" for="labelAgencia">Agência</label>
-                <select id="combobox" class="comb-agencia" name="comb-agencia">
+                <select id="cmbAgencia" class="comb-agencia" name="comb-agencia">
                     <option value="nome" selected>Miraz</option>
                 </select>
             </div> 
 
             <div class="agencia">
                 <label class="label-status" for="labelStatus">Status</label>
-                <select id="combobox" class="comb-status" name="comb-agencia">
-                    <option value="nome" selected>Enviado</option>
+                <select id="comboboxStatus" class="comb-status" name="comb-agencia">
+                    <option value="enviado" selected>Transferindo para</option>
                 </select>
             </div>
 
@@ -63,13 +63,13 @@
 
             <div class="agencia">
                 <label class="agencia-destino" for="labelAgenciaDestino">Agência</label>
-                <select id="combobox" class="comb-agencia-destino" name="comb-agencia-destino">
+                <select id="cmbAgenciaDestino" class="comb-agencia-destino" name="comb-agencia-destino">
                     <option value="nome" selected>Castro</option>
                 </select>
             </div>
         </div>
         
-        <button class="botao" id="atualizar" type="button" onclick="" >Calcular</button>
+        <button class="botao" id="atualizar" type="button" onclick="atualizarRastreio()" >Atualizar</button>
 
     </div>
 
