@@ -44,6 +44,7 @@ function pesquisaSimples() {
 
     numeroLinha = 0;
     let txtPesquisa = $("#pesquisa").val();
+    alert("Código do envio: " + txtPesquisa);
   
     if(txtPesquisa.length == 0 || txtPesquisa == "") {
       alert("Informe um código de rastreio para realizar a pesquisa");
@@ -203,6 +204,8 @@ function atualizarRastreio() {
 
   if(tipo === "Administrador") {
 
+    alert("Entrou no if");
+
     $.ajax({
     
       url:"http://localhost:" + porta + "/rastreio/atualizar",
@@ -210,7 +213,7 @@ function atualizarRastreio() {
       data: JSON.stringify({
           
         descricao: descricao,
-        gerarEnvio: {
+        gerar_envio: {
           idEnvio: codigoEnvio
         }
 
