@@ -206,7 +206,8 @@ function inserirUsuario() {
     }
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
+    fecharModal();
   }
 }
 
@@ -275,7 +276,7 @@ function editar(id) {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
   }
 }
 
@@ -351,7 +352,7 @@ function excluir(id) {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
   }
 }
 

@@ -44,7 +44,6 @@ function pesquisaSimples() {
 
     numeroLinha = 0;
     let txtPesquisa = $("#pesquisa").val();
-    alert("Código do envio: " + txtPesquisa);
   
     if(txtPesquisa.length == 0 || txtPesquisa == "") {
       alert("Informe um código de rastreio para realizar a pesquisa");
@@ -54,7 +53,6 @@ function pesquisaSimples() {
   
     } else {
 
-      alert("Entrou no else");
 
       // pesquisar se aquele código foi realmente gerado
       $.ajax({
@@ -65,12 +63,8 @@ function pesquisaSimples() {
   
         success: function(msg) {
 
-          alert("Entrou no success");
-          alert(msg);
   
           if(Object.keys(msg).length === 0 || msg === "null") {
-  
-            alert("Esse código não existe");
 
             linhas = '<tr><td>'  + "    " + '</td></tr>'
 
@@ -80,8 +74,6 @@ function pesquisaSimples() {
             document.getElementById("pesquisa").value = "";
   
           } else {
-
-            alert("Entrou no segundo else");
 
             // pesquisar o rastreiamento do código digitado 
             $.ajax({
@@ -236,7 +228,7 @@ function atualizarRastreio() {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
   }
 
 }
