@@ -135,6 +135,28 @@
           expressValue + " R$";
       }
 
+      function getSelectedFreight() {
+        var selectedFreight;
+        var buttons = document.querySelectorAll(".mainBlock button");
+        buttons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            selectedFreight = button.id.replace("Button", "");
+          }
+        });
+        return selectedFreight;
+      }
+
+      function getSelectedPayment() {
+        var selectedPayment;
+        var buttons = document.querySelectorAll(".paymentMethodRow a");
+        buttons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            selectedPayment = button.id.replace("Button", "");
+          }
+        });
+        return selectedPayment;
+      }
+
       function validateForm() {
         var freightButtons = document.querySelectorAll(".mainBlock button");
         var paymentButtons = document.querySelectorAll(".paymentMethodRow a");
@@ -165,11 +187,63 @@
             "Por favor, selecione um método de pagamento.";
         } else {
           document.getElementById("errorMessage").innerHTML = "";
-          alert("Pagamento efetuado! O produto foi adicionado ao BD.");
-          window.location.href = "createShipment.html";
+          sendPaymentData();
         }
       }
 
+      function sendPaymentData() {
+        const selectedFreight = getSelectedFreight();
+        const selectedPayment = getSelectedPayment();
+
+        const data = {
+          freight: selectedFreight,
+          payment: selectedPayment,
+          height: localStorage.getItem("height"),
+          width: localStorage.getItem("width"),
+          length: localStorage.getItem("length"),
+          name: localStorage.getItem("name"),
+          description: localStorage.getItem("description"),
+          cep: localStorage.getItem("cep"),
+          state: localStorage.getItem("state"),
+          city: localStorage.getItem("city"),
+          street: localStorage.getItem("street"),
+          number: localStorage.getItem("number"),
+          block: localStorage.getItem("block"),
+          batch: localStorage.getItem("batch"),
+          destCep: localStorage.getItem("destCep"),
+          destState: localStorage.getItem("destState"),
+          destCity: localStorage.getItem("destCity"),
+          destStreet: localStorage.getItem("destStreet"),
+          destNumber: localStorage.getItem("destNumber"),
+          destBlock: localStorage.getItem("destBlock"),
+          destBatch: localStorage.getItem("destBatch"),
+        };
+
+        fetch("http://your-spring-backend-url/api/payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.text();
+            } else {
+              throw new Error(
+                "Erro ao processar o pagamento. Por favor, tente novamente."
+              );
+            }
+          })
+          .then((text) => {
+            alert("Pagamento efetuado! O produto foi adicionado ao BD.");
+            window.location.href = "createShipment.html";
+          })
+          .catch((error) => {
+            document.getElementById("errorMessage").innerHTML =
+              "Erro ao processar o pagamento. Por favor, tente novamente.";
+          });
+      }
       window.onload = setFreightValues;
     </script>
   </body>
