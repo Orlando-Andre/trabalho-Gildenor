@@ -53,7 +53,6 @@ function pesquisaSimples() {
   
     } else {
 
-      alert("Entrou no else");
 
       // pesquisar se aquele código foi realmente gerado
       $.ajax({
@@ -64,12 +63,8 @@ function pesquisaSimples() {
   
         success: function(msg) {
 
-          alert("Entrou no success");
-          alert(msg);
   
           if(Object.keys(msg).length === 0 || msg === "null") {
-  
-            alert("Esse código não existe");
 
             linhas = '<tr><td>'  + "    " + '</td></tr>'
 
@@ -79,8 +74,6 @@ function pesquisaSimples() {
             document.getElementById("pesquisa").value = "";
   
           } else {
-
-            alert("Entrou no segundo else");
 
             // pesquisar o rastreiamento do código digitado 
             $.ajax({
@@ -203,6 +196,8 @@ function atualizarRastreio() {
 
   if(tipo === "Administrador") {
 
+    alert("Entrou no if");
+
     $.ajax({
     
       url:"http://localhost:" + porta + "/rastreio/atualizar",
@@ -210,7 +205,7 @@ function atualizarRastreio() {
       data: JSON.stringify({
           
         descricao: descricao,
-        gerarEnvio: {
+        gerar_envio: {
           idEnvio: codigoEnvio
         }
 
@@ -233,7 +228,7 @@ function atualizarRastreio() {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
   }
 
 }
