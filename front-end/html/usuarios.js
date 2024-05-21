@@ -1,4 +1,4 @@
-const porta = 1010
+const porta = 9595
 
 var tipo;
 
@@ -8,7 +8,6 @@ $(document).ready(function() {
   tipo = obterParametroDaURL('tipo');
 
   carregaTabela();
-  preencheCmbAgencia();
 
 });
 
@@ -21,7 +20,7 @@ function carregaTabela() {
           
     $.ajax({
       
-      url:"http://localhost:" + porta + "/usuario/carregarTabela",
+      url:"http://localhost:" + porta + "/usuario/consultaTodos",
       type: 'get',
       data: {},
 
@@ -54,8 +53,8 @@ function carregaTabela() {
 
   function mostraLinhaTabela(data) {
     return (
-      '<tr><td>' + data.idUsuario + '</td>' + 
-      '<td>' + data.nome + '</td>'+
+      '<tr><td>' + data.nome + '</td>' + 
+      '<td>' + data.email + '</td>'+
       '<td>' + data.tipo + '</td>'+
 
       '<td><button class="botao verde" id="btnEditar" onclick="editar('+ data.idUsuario +')">Editar</button>'+
@@ -77,69 +76,17 @@ document.getElementById('btnCadastrarUsuario')
 document.getElementById('modalFechar')
   .addEventListener('click' , fecharModal)
 
-document.getElementById('btnCadastrarUsuario').addEventListener('click', function() {
-  limpaModal();
-  abrirModal();
-  preencheCmbAgencia();
-  
-});
-
 
 function limpaModal() {
-
-  $("#nome").val("");
-  $("#senha").val("");
-  $("#cmbAgencia").val("");
-  
-}
-
-//Consulta todas as agências para preencher a combobox de agências
-function preencheCmbAgencia() {
-
-  $.ajax({
-      
-    url:"http://localhost:" + porta + "/agencia/carregarTabela",
-    type: 'get',
-    data: {},
-
-    success: function(msg) {
-
-      if(Object.keys(msg).length === 0) {
-
-        alert("Sem agências cadastradas");
-
-      }else {
-
-        let opcoes;
-
-        for(let i = 0; i < msg.length; i++) { 
-          
-          opcoes += mostraLinhaCmbAgencia(msg[i]);
-
-        }  
-
-        //Adiciona as opcoes na combobox 
-        $('#cmbAgencia').html(opcoes);
-      }
-
-    },
-    error: function(msg){
-      alert("Erro de busca...")
-    }
-  });
-}
-
-function mostraLinhaCmbAgencia(data) {
-  return (
-
-    '<option value="'+ data.idAgencia + '">' + data.nome +'</option>'
-    
-  );
+  document.getElementById("nome").value = "";
+  document.getElementById("senha").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("cmbTipoUsuario").selectedIndex = 0;
 }
 
 
 // CRUD Usuário
-function validarDadosModalCadastroUsuario(nome, senha) {
+function validarDadosModalCadastroUsuario(nome, senha, email) {
 
   if(nome.length == 0 || nome == "") {
     alert("Informe um nome");
@@ -154,8 +101,25 @@ function validarDadosModalCadastroUsuario(nome, senha) {
       var campoSenha = document.getElementById('senha');
       campoSenha.focus();
 
-    } else {    
-      return true;
+    } else {
+    
+      //Validar email
+
+      // Expressão regular para validar e-mail
+       var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Testa o formato do e-mail
+      if (!regex.test(email)) {
+
+        // E-mail inválido
+        alert('Informe um E-mail válido!');
+
+        var campoEmail = document.getElementById('email');
+        campoEmail.focus();
+
+      } else {
+        return true;
+      }
     }
   }
 }
@@ -166,12 +130,11 @@ function inserirUsuario() {
   if(tipo === "Administrador") {
 
     let nome = $("#nome").val();
+    let email = $("#email").val();
     let senha = $("#senha").val();
     let tipo = $("#cmbTipoUsuario").val();
-    let agencia = $("#cmbAgencia").val();
 
-
-    var dadosValidados = validarDadosModalCadastroUsuario(nome, senha);
+    var dadosValidados = validarDadosModalCadastroUsuario(nome, senha, email);
 
     if(dadosValidados == true) {
 
@@ -182,22 +145,20 @@ function inserirUsuario() {
         data: JSON.stringify({
             nome: nome,
             senha: senha,
-            tipo: tipo,
-            agencia: {
-              idAgencia: agencia
-            }
+            email: email,
+            tipo: tipo
         }),
     
         contentType:"application/json;charset=UTF-8",
     
         success: function(msg){
     
-          alert("Usuário cadastrado com sucesso!")
+          alert("Usuario cadastrado com Sucesso!")
     
           carregaTabela();
           limpaModal();
           fecharModal();
-           
+            
         },
         error: function(msg) {
           alert("Erro de Inserção...")
@@ -206,8 +167,7 @@ function inserirUsuario() {
     }
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
-    fecharModal();
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
   }
 }
 
@@ -216,13 +176,12 @@ function inserirUsuario() {
 //O botão editar da tabela chama essa função
 function editar(id) {
 
-  limpaModal();
   if(tipo === "Administrador") {
 
     //ir no banco de dados pesquisar com o id
     $.ajax({
                 
-      url:"http://localhost:" + porta + "/usuario/pesquisar/" + id,
+      url:"http://localhost:" + porta + "/usuario/consultaPorId/" + id,
       type: 'get',
       data: {},
       
@@ -231,34 +190,22 @@ function editar(id) {
         //Preencher modal com os dados a serem editados
         if(Object.keys(msg).length === 0) {
 
-          alert("Usuário não encontrado...")
+          alert("Usuario não encontrado...")
 
         }else {
 
           $("#nome").val(msg.nome);
           $("#senha").val(msg.senha);
-          
+          $("#email").val(msg.email);
+
           if(msg.tipo === "Administrador"){
             document.getElementById("cmbTipoUsuario").selectedIndex = 0;
           }else{
             document.getElementById("cmbTipoUsuario").selectedIndex = 1;
           }
           
-          //pegar id_agencia
-          var agencia = msg.agencia
-          alert("Nome da agência: " + agencia.nome);
-
-          var idAgencia = agencia.idAgencia;
-          var nomeAgencia = agencia.nome;
-
-          alert("Código da agência: " + idAgencia);
-          
-          $('#cmbAgencia').val(idAgencia);
-
 
           abrirModal();
-          $('#cmbAgencia').val(idAgencia);
-          
 
           //Troca a função a ser chamada pelo botão salvar da Modal
 
@@ -276,7 +223,7 @@ function editar(id) {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
   }
 }
 
@@ -286,11 +233,11 @@ function editar(id) {
 function enviarDadosEditar(id) {
 
   let nome = $("#nome").val();
+  let email = $("#email").val();
   let senha = $("#senha").val();
   let tipo = $("#cmbTipoUsuario").val();
-  let agencia = $("#cmbAgencia").val();
 
-  var dadosValidados = validarDadosModalCadastroUsuario(nome, senha);
+  var dadosValidados = validarDadosModalCadastroUsuario(nome, senha, email);
 
   if(dadosValidados == true) {
 
@@ -299,21 +246,18 @@ function enviarDadosEditar(id) {
       url:"http://localhost:" + porta + "/usuario/atualizar",
       type:'PUT',
       data: JSON.stringify({
-
           idUsuario:id,
           nome: nome,
           senha: senha,
-          tipo: tipo, 
-          agencia: {
-            idAgencia: agencia
-          }
+          email: email,
+          tipo: tipo
       }),
   
       contentType:"application/json;charset=UTF-8",
   
       success: function(msg){
   
-        alert("Usuário alterado com sucesso!")
+        alert("Usuario alterado com sucesso!")
   
         carregaTabela();
         limpaModal();
@@ -352,7 +296,7 @@ function excluir(id) {
     });
 
   }else{
-    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função");
+    alert("Acesso Negado! Este Usuário não tem permissão para acessar essa função :(");
   }
 }
 
@@ -382,11 +326,6 @@ function pesquisaSimples() {
         if(Object.keys(msg).length === 0) {
 
           alert("Usuário não encontrado...");
-
-          linhas = '<td>'  + "    " + '</tr>'
-
-          //Adiciona as linhas na tabela
-          $('#corpoTabela').html(linhas);
 
         } else {
 

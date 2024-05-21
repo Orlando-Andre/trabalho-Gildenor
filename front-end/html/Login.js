@@ -1,4 +1,4 @@
-const porta = 1010
+const porta = 9595
 
 function validarDadosLogin() {
 
@@ -6,7 +6,7 @@ function validarDadosLogin() {
     let senha = $("#senha").val();
 
     if(nome.length == 0 || nome == "") {
-        alert("Informe um usuário");
+        alert("Informe um Usuário");
     }else{
         if(senha.length == 0 || senha == ""){
             alert("Informe uma senha");
@@ -19,7 +19,7 @@ function validarDadosLogin() {
 function enviaDadosLogin(nome,senha) {
 
     $.ajax({
-        url:"http://localhost:" + porta + "/usuario/",
+        url:"http://localhost:" + porta + "/login/",
         type:'POST',
         data: JSON.stringify({
             nome: nome,
@@ -49,7 +49,6 @@ function enviaDadosLogin(nome,senha) {
                 //Chamar tela do menu
                 // Altere a propriedade 'href' do objeto location para a URL da outra tela passando as informações do user
                 window.location.href = URL;
-            
             }
            
         },

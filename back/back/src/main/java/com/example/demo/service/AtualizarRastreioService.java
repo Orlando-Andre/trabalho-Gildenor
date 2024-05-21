@@ -19,5 +19,9 @@ public class AtualizarRastreioService {
 	public List<Status> pesquisarIdEnvio(Long id_envio) {
 		return rastreioDao.findByGerarEnvio_IdEnvio(id_envio);
 	}
+	
+	public Status atualizarRastreio(Status s) {
+		return rastreioDao.save(s);
+	}
 
 }

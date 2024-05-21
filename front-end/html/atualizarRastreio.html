@@ -7,11 +7,8 @@
 
     <link rel="stylesheet" href="atualizarRastreio.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="atualizarRastreio.js">
 
 </head>
-
 <body>
     
     <div class="telas">
@@ -23,21 +20,12 @@
 
                 <div class="pesquisa">
                     <input id="pesquisa" type="text" class="modal-campo">
-                    <span id="icone" onclick="pesquisaSimples()"><i class="bi bi-search"></i></span>
+                    <span id="icone" onclick="pesquisaComplexa()"><i class="bi bi-search"></i></span>
                 </div>
             </div>
 
 
-            <div class="historico">
-                <table class="tabela">
-
-                    <tbody id="corpoTabela">
-        
-                        <!--O corpo da tabela será preenchido dinamicamente-->
-                        
-                    </tbody>
-                </table>
-            </div>
+            <div class="historico"></div>
 
         </div>
         
@@ -47,15 +35,15 @@
             
             <div class="agencia">
                 <label class="label-agencia" for="labelAgencia">Agência</label>
-                <select id="cmbAgencia" class="comb-agencia" name="comb-agencia">
+                <select id="combobox" class="comb-agencia" name="comb-agencia">
                     <option value="nome" selected>Miraz</option>
                 </select>
             </div> 
 
             <div class="agencia">
                 <label class="label-status" for="labelStatus">Status</label>
-                <select id="comboboxStatus" class="comb-status" name="comb-agencia">
-                    <option value="enviado" selected>Transferindo para</option>
+                <select id="combobox" class="comb-status" name="comb-agencia">
+                    <option value="nome" selected>Enviado</option>
                 </select>
             </div>
 
@@ -63,17 +51,14 @@
 
             <div class="agencia">
                 <label class="agencia-destino" for="labelAgenciaDestino">Agência</label>
-                <select id="cmbAgenciaDestino" class="comb-agencia-destino" name="comb-agencia-destino">
+                <select id="combobox" class="comb-agencia-destino" name="comb-agencia-destino">
                     <option value="nome" selected>Castro</option>
                 </select>
             </div>
         </div>
         
-        <button class="botao" id="atualizar" type="button" onclick="atualizarRastreio()" >Atualizar</button>
+        <button class="botao" id="atualizar" type="button" onclick="" >Calcular</button>
 
     </div>
-
-    <script src="atualizarRastreio.js"></script>
-    
 </body>
 </html>

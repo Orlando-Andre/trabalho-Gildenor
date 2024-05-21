@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="usuarios.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="usuarios.js">
 
     <title>Cadastrar Usuário</title>
 
@@ -32,10 +31,10 @@
         <table class="tabela">
             <thead>
                 <tr>
-                    <th>Matrícula</th>
                     <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>Agência</th>
                     <th>Tipo</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody id="corpoTabela">
@@ -52,17 +51,18 @@
                     <span class="modal-fechar"id="modalFechar">&#10006;</span>
                 </header>
                 <form class="modal-form">
-
-                    <input id="nome" type="text" class="modal-campo" placeholder="Nome">
-
-                    <input id="senha" type="text" class="modal-campo" placeholder="Senha">
+                    <input id="codigo" type="text" class="modal-campo" placeholder="Código">
 
                     <select id="cmbTipoUsuario" class="modal-campo" name="Tipo">
                         <option value="Administrador" selected>Administrador</option>
-                        <option value="Usuário Padrão">Usuário Padrão</option>
+                        <option value="Padrão">Padrão</option>
                     </select>
 
-                    <select id="cmbAgencia" class="modal-campo" name="agencia"></select>
+                    <input id="nome" type="text" class="modal-campo" placeholder="Nome">
+
+                    <select id="cmbAgencia" class="modal-campo" name="Agência">
+                        <option value="Administrador" selected>Agência do Colorado</option>
+                    </select>
 
                 </form>
                 <footer class="modal-footer">
