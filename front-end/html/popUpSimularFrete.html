@@ -17,110 +17,129 @@
 
         <div class="box">
 
-            <h1 class="tituloBox">Dados do Remetente</h1>
+            <div id="camposRemetente">
 
-            <div class="colunas">
-                <div class="coluna">
-                    <div class="textfield">
-                        <label for="cepRemetente">CEP</label>
-                        <input id="cepRemetente" type="text" name="cepRemetente" placeholder="76190000">
-                    </div>
-                    <div class="textfield">
-                        <label for="cidadeRemetente">Cidade</label>
-                        <input id="cidadeRemetente" type="text" name="cidadeRemetente" placeholder="Goiânia">
-                    </div>
-                    <div class="textfield">
-                        <label for="NumeroRemetente">Número</label>
-                        <input id="numeroRemetente" type="text" name="numeroRemetente" placeholder="225">
-                    </div>
-                    <div class="textfield">
-                        <label for="loteRememtente">Lote</label>
-                        <input id="loteRemetente" type="text" name="loteRemetente" placeholder="5">
-                    </div>
-                </div>
+                <h1 class="tituloBox">Dados do Remetente</h1>
 
-                <div class="coluna">
-                    <div class="textfield">
-                        <label for="ufRemetente">UF</label>
-                        <input id="ufRemetente" type="text" name="ufRemetente" placeholder="Goiás">
+                <div class="colunas">
+                    <div class="coluna">
+                        <div class="textfield">
+                            <label for="cepRemetente">CEP</label>
+                            <input id="cepRemetente" type="text" name="cepRemetente" placeholder="76190000">
+                        </div>
+                        <div class="textfield">
+                            <label for="cidadeRemetente">Cidade</label>
+                            <input id="cidadeRemetente" type="text" name="cidadeRemetente" placeholder="Goiânia">
+                        </div>
+                        <div class="textfield">
+                            <label for="NumeroRemetente">Número</label>
+                            <input id="numeroRemetente" type="text" name="numeroRemetente" placeholder="225">
+                        </div>
+                        <div class="textfield">
+                            <label for="loteRememtente">Lote</label>
+                            <input id="loteRemetente" type="text" name="loteRemetente" placeholder="5">
+                        </div>
                     </div>
-                    <div class="textfield">
-                        <label for="ruaRemetente">Rua</label>
-                        <input id="ruaRemetente" type="text" name="ruaRemetente" placeholder="Rua São Jerônimo">
-                    </div>
-                    <div class="textfield">
-                        <label for="quadraRemetente">Quadra</label>
-                        <input id="quadraRemetente" type="text" name="quadraRemetente" placeholder="33">
-                    </div>
-                    <div class="textfield">
-                        <label for="bairroRemetente">Bairro</label>
-                        <input id="bairroRemetente" type="text" name="bairroRemetente" placeholder="Setor Bueno">
+
+                    <div class="coluna">
+                        <div class="textfield">
+                            <label for="ufRemetente">UF</label>
+                            <input id="ufRemetente" type="text" name="ufRemetente" placeholder="Goiás">
+                        </div>
+                        <div class="textfield">
+                            <label for="ruaRemetente">Rua</label>
+                            <input id="ruaRemetente" type="text" name="ruaRemetente" placeholder="Rua São Jerônimo">
+                        </div>
+                        <div class="textfield">
+                            <label for="quadraRemetente">Quadra</label>
+                            <input id="quadraRemetente" type="text" name="quadraRemetente" placeholder="33">
+                        </div>
+                        <div class="textfield">
+                            <label for="bairroRemetente">Bairro</label>
+                            <input id="bairroRemetente" type="text" name="bairroRemetente" placeholder="Setor Bueno">
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+            <div id="calculoFretePac" class="hidden">
+        
+                <h2>PAC</h2>
+
+                <h3>Prazo estimado:</h3>
+                <h3 id="qtdDiasFretePac">9 a 12 dias</h3>
+
+                <h3>Valor:</h3>
+                <h3 id="valorFretePac">R$ X</h3>
+
+            </div>
+
         </div>
 
         <div class="box">
 
-            <h1 class="tituloBox">Dados do Destinatário</h1>
+            <div id="camposDestinatario">
 
-            <div class="colunas">
-                <div class="coluna">
-                    <div class="textfield">
-                        <label for="cepDestinatario">CEP</label>
-                        <input id="cepDestinatario" type="text" name="cepDestinatario" placeholder="75190000">
-                    </div>
-                    <div class="textfield">
-                        <label for="cidadeDestinatario">Cidade</label>
-                        <input id="cidadeDestinatario" type="text" name="cidadeDestinatario" placeholder="Salvador">
-                    </div>
-                    <div class="textfield">
-                        <label for="NumeroDestinatario">Número</label>
-                        <input id="numeroDestinatario" type="text" name="numeroDestinatario" placeholder="58">
-                    </div>
-                    <div class="textfield">
-                        <label for="loteDestinatario">Lote</label>
-                        <input id="loteDestinatario" type="text" name="loteDestinatario" placeholder="199">
-                    </div>
-                </div>
+                <h1 class="tituloBox">Dados do Destinatário</h1>
 
-                <div class="coluna">
-                    <div class="textfield">
-                        <label for="ufDestinatario">UF</label>
-                        <input id="ufDestinatario" type="text" name="ufDestinatario" placeholder="Bahia">
+                <div id="colunasDestinatario" class="colunas">
+                    <div class="coluna">
+                        <div class="textfield">
+                            <label for="cepDestinatario">CEP</label>
+                            <input id="cepDestinatario" type="text" name="cepDestinatario" placeholder="75190000">
+                        </div>
+                        <div class="textfield">
+                            <label for="cidadeDestinatario">Cidade</label>
+                            <input id="cidadeDestinatario" type="text" name="cidadeDestinatario" placeholder="Salvador">
+                        </div>
+                        <div class="textfield">
+                            <label for="NumeroDestinatario">Número</label>
+                            <input id="numeroDestinatario" type="text" name="numeroDestinatario" placeholder="58">
+                        </div>
+                        <div class="textfield">
+                            <label for="loteDestinatario">Lote</label>
+                            <input id="loteDestinatario" type="text" name="loteDestinatario" placeholder="199">
+                        </div>
                     </div>
-                    <div class="textfield">
-                        <label for="ruaDestinatario">Rua</label>
-                        <input id="ruaDestinatario" type="text" name="ruaDestinatario" placeholder="Rua São João">
-                    </div>
-                    <div class="textfield">
-                        <label for="quadraDestinatario">Quadra</label>
-                        <input id="quadraDestinatario" type="text" name="quadraDestinatario" placeholder="46">
-                    </div>
-                    <div class="textfield">
-                        <label for="bairroDestinatario">Bairro</label>
-                        <input id="bairroDestinatario" type="text" name="bairroDestinatario" placeholder="Centro">
+
+                    <div class="coluna">
+                        <div class="textfield">
+                            <label for="ufDestinatario">UF</label>
+                            <input id="ufDestinatario" type="text" name="ufDestinatario" placeholder="Bahia">
+                        </div>
+                        <div class="textfield">
+                            <label for="ruaDestinatario">Rua</label>
+                            <input id="ruaDestinatario" type="text" name="ruaDestinatario" placeholder="Rua São João">
+                        </div>
+                        <div class="textfield">
+                            <label for="quadraDestinatario">Quadra</label>
+                            <input id="quadraDestinatario" type="text" name="quadraDestinatario" placeholder="46">
+                        </div>
+                        <div class="textfield">
+                            <label for="bairroDestinatario">Bairro</label>
+                            <input id="bairroDestinatario" type="text" name="bairroDestinatario" placeholder="Centro">
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div id="calculoFreteSedex" class="hidden">
+                <h2>SEDEX</h2>
+
+                <h3>Prazo estimado:</h3>
+                <h3 id="qtdDiasFreteSedex">4 a 6 dias</h3>
+
+                <h3>Valor:</h3>
+                <h3 id="valorFreteSedex">R$ X</h3>
+                
+            </div>
+
         </div>
 
-        <button class="botao verde" id="btnCalcular" type="button" onclick="validarDados()" >Calcular</button>
+        <button class="botao verde" id="btnCalcular" type="button" onclick="validaDadosRemetenteEdestinatario()" >Calcular</button>
 
     </main>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
