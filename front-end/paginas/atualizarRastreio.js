@@ -53,7 +53,6 @@ function pesquisaSimples() {
   
     } else {
 
-
       // pesquisar se aquele código foi realmente gerado
       $.ajax({
                 
@@ -64,7 +63,9 @@ function pesquisaSimples() {
         success: function(msg) {
 
   
-          if(Object.keys(msg).length === 0 || msg === "null") {
+          if(msg === null || msg === undefined || Object.keys(msg).length === 0) {
+
+            alert("Esse código de envio não existe");
 
             linhas = '<tr><td>'  + "    " + '</td></tr>'
 

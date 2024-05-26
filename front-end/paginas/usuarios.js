@@ -246,12 +246,10 @@ function editar(id) {
           
           //pegar id_agencia
           var agencia = msg.agencia
-          alert("Nome da agência: " + agencia.nome);
 
           var idAgencia = agencia.idAgencia;
           var nomeAgencia = agencia.nome;
 
-          alert("Código da agência: " + idAgencia);
           
           $('#cmbAgencia').val(idAgencia);
 
