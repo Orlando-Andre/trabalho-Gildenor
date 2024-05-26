@@ -25,8 +25,6 @@ public class Status {
     private GerarEnvio gerarEnvio;
 	
 	
-	
-	
 	public Long getIdStatus() {
 		return idStatus;
 	}
