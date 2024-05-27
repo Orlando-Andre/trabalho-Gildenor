@@ -1,0 +1,188 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Passion+One&family=Red+Hat+Display:wght@500;700;900&display=swap');
+
+:root {
+
+    --azulEscuro: #324FA6;
+    --azulClaro: #96B3D9;
+    --verde: #A3D96C;
+    --amareloClaro: #F2D272;
+    --amarelo: #ffc822e7;
+}
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: white;
+    font-weight: 800;
+    color: white;
+}
+
+header {
+    background-color: var(--azulEscuro);
+    height: 70px;
+    line-height: 70px;
+    box-shadow: 0 1px 2px #CCC;
+}
+
+main {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main.esconder {
+    display: none;
+}
+
+
+.logo {
+    height: 85%;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+
+.box {
+    background-color: var(--azulEscuro);
+    width: 25%;
+    height: 450px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 10px #000000a3;
+    margin: 10vh 50px 0px 50px;
+    position: relative;
+}
+
+.tituloBox {
+    text-align: center;
+    margin: 0px;
+}
+
+/*Calcular Frete*/
+.colunas {
+    width: 100%;
+    height: 350px;
+    display: flex;
+}
+
+.coluna {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.textfield {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0px;
+
+}
+
+input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding: 15px;
+    background-color: var(--azulClaro);
+    color: white;
+    box-shadow: 1px 1px 6px #00000076;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 1px;
+}
+
+
+/*Rastreamento*/
+.textfield-rastreio {
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+
+.lblCodigoRastreio {
+    font-size: 1.5rem;
+}
+
+.campoCodigoRastreio {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
+.botao {
+    border-style: none;
+    height: 40px;
+    padding: 6px 12px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 50px;
+}
+
+.botao.verde {
+    background-color: var(--verde);
+    width: 200px;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+}
+
+.botao.verde:hover {
+    background-color: #87fa14;
+}
+
+.botao.login {
+    background-color: var(--amareloClaro);
+    float: right;
+    height: 71%;
+    width: 300px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+.botao.login:hover {
+    background-color: var(--amarelo);
+}
+
+::placeholder {
+
+    color: white;
+}
+
+#iframeContent {
+    width: 70vw;
+    height: 75vh;
+    padding: 20px;
+
+    transition: 0.5s;
+    
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50% , -50%);
+
+    border-radius: 20px;
+}
+
+.iframe-Content.ativo {
+    background-color: var(--azulEscuro);
+}
+

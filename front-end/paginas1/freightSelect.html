@@ -37,7 +37,7 @@
         >
           <h2>PAC</h2>
           <h3>Prazo estimado:</h3>
-          <h3>X Dias</h3>
+          <h3>8 a 12 Dias</h3>
           <br />
           <h3>Valor:</h3>
           <h3 id="pacValue">X R$</h3>
@@ -49,7 +49,7 @@
         >
           <h2>SEDEX</h2>
           <h3>Prazo estimado:</h3>
-          <h3>X Dias</h3>
+          <h3>5 a 8 Dias</h3>
           <br />
           <h3>Valor:</h3>
           <h3 id="sedexValue">X R$</h3>
@@ -61,7 +61,7 @@
         >
           <h2>Expresso</h2>
           <h3>Prazo estimado:</h3>
-          <h3>X Dias</h3>
+          <h3>2 a 5 Dias</h3>
           <br />
           <h3>Valor:</h3>
           <h3 id="expressValue">X R$</h3>
@@ -99,9 +99,11 @@
           Efetuar Pagamento
         </button>
       </div>
-      <div id="errorMessage" class="error"></div>
+      <br>
+      <div id="errorMessage" class="error" style="color: white;"></div>
     </div>
     <script>
+      const porta = 1010;
       function highlightButton(buttonId) {
         var buttons = document.querySelectorAll(".mainBlock button");
         buttons.forEach(function (button) {
@@ -219,7 +221,7 @@
           destBatch: localStorage.getItem("destBatch"),
         };
 
-        fetch("http://your-spring-backend-url/api/payment", {
+        fetch("http://localhost:" + porta + "/shipment/createShipment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -237,11 +239,12 @@
           })
           .then((text) => {
             alert("Pagamento efetuado! O produto foi adicionado ao BD.");
-            window.location.href = "createShipment.html";
+            window.location.href = "menu.html";
           })
           .catch((error) => {
             document.getElementById("errorMessage").innerHTML =
               "Erro ao processar o pagamento. Por favor, tente novamente.";
+            alert(error.message);
           });
       }
       window.onload = setFreightValues;
