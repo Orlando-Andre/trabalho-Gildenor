@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seleção de frete</title>
+    <link rel="stylesheet" href="freightSelect.css" />
+    <style>
+      .selected {
+        background-color: rgba(231, 231, 49, 0.696);
+      }
+      .paymentMethodRow a {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: black;
+        border: 1px solid #ccc;
+        margin: 5px;
+        border-radius: 5px;
+      }
+      .paymentMethodRow a.selected {
+        background-color: rgba(231, 231, 49, 0.696);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Pagamento</h1>
+        <h3>Selecione o frete desejado:</h3>
+      </div>
+      <div id="common" class="mainBlock mt-1">
+        <button
+          id="pacButton"
+          class="leftCol defaultCard"
+          onclick="highlightButton('pacButton')"
+        >
+          <h2>PAC</h2>
+          <h3>Prazo estimado:</h3>
+          <h3>X Dias</h3>
+          <br />
+          <h3>Valor:</h3>
+          <h3 id="pacValue">X R$</h3>
+        </button>
+        <button
+          id="sedexButton"
+          class="midCol defaultCard"
+          onclick="highlightButton('sedexButton')"
+        >
+          <h2>SEDEX</h2>
+          <h3>Prazo estimado:</h3>
+          <h3>X Dias</h3>
+          <br />
+          <h3>Valor:</h3>
+          <h3 id="sedexValue">X R$</h3>
+        </button>
+        <button
+          id="expressButton"
+          class="rigthCol defaultCard"
+          onclick="highlightButton('expressButton')"
+        >
+          <h2>Expresso</h2>
+          <h3>Prazo estimado:</h3>
+          <h3>X Dias</h3>
+          <br />
+          <h3>Valor:</h3>
+          <h3 id="expressValue">X R$</h3>
+        </button>
+      </div>
+      <div class="paymentMethodRow mt-1">
+        <a
+          id="pixButton"
+          href="javascript:void(0)"
+          onclick="highlightPaytButton('pixButton')"
+          >Pix</a
+        >
+        <a
+          id="boletoButton"
+          href="javascript:void(0)"
+          onclick="highlightPaytButton('boletoButton')"
+          >Boleto</a
+        >
+        <a
+          id="creditoButton"
+          href="javascript:void(0)"
+          onclick="highlightPaytButton('creditoButton')"
+          >Crédito</a
+        >
+        <a
+          id="debitoButton"
+          href="javascript:void(0)"
+          onclick="highlightPaytButton('debitoButton')"
+          >Débito</a
+        >
+      </div>
+      <div class="buttonsRow mt-1">
+        <button class="redBG">Voltar ao formulário de envio</button>
+        <button class="greenBG" onclick="validateForm()">
+          Efetuar Pagamento
+        </button>
+      </div>
+      <div id="errorMessage" class="error"></div>
+    </div>
+    <script>
+      function highlightButton(buttonId) {
+        var buttons = document.querySelectorAll(".mainBlock button");
+        buttons.forEach(function (button) {
+          button.classList.remove("selected");
+        });
+        var selectedButton = document.querySelector("#" + buttonId);
+        selectedButton.classList.add("selected");
+      }
+
+      function highlightPaytButton(buttonId) {
+        var buttons = document.querySelectorAll(".paymentMethodRow a");
+        buttons.forEach(function (button) {
+          button.classList.remove("selected");
+        });
+        var selectedButton = document.querySelector("#" + buttonId);
+        selectedButton.classList.add("selected");
+      }
+
+      function getRandomValue(min, max) {
+        return (Math.random() * (max - min) + min).toFixed(2);
+      }
+
+      function setFreightValues() {
+        var pacValue = parseFloat(getRandomValue(29.99, 119.99));
+        var sedexValue = (pacValue * 1.15).toFixed(2);
+        var expressValue = (pacValue * 1.2).toFixed(2);
+
+        document.getElementById("pacValue").innerText = pacValue + " R$";
+        document.getElementById("sedexValue").innerText = sedexValue + " R$";
+        document.getElementById("expressValue").innerText =
+          expressValue + " R$";
+      }
+
+      function getSelectedFreight() {
+        var selectedFreight;
+        var buttons = document.querySelectorAll(".mainBlock button");
+        buttons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            selectedFreight = button.id.replace("Button", "");
+          }
+        });
+        return selectedFreight;
+      }
+
+      function getSelectedPayment() {
+        var selectedPayment;
+        var buttons = document.querySelectorAll(".paymentMethodRow a");
+        buttons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            selectedPayment = button.id.replace("Button", "");
+          }
+        });
+        return selectedPayment;
+      }
+
+      function validateForm() {
+        var freightButtons = document.querySelectorAll(".mainBlock button");
+        var paymentButtons = document.querySelectorAll(".paymentMethodRow a");
+
+        var hasFreightSelected = false;
+        var hasPaymentSelected = false;
+
+        freightButtons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            hasFreightSelected = true;
+          }
+        });
+
+        paymentButtons.forEach(function (button) {
+          if (button.classList.contains("selected")) {
+            hasPaymentSelected = true;
+          }
+        });
+
+        if (!hasFreightSelected && !hasPaymentSelected) {
+          document.getElementById("errorMessage").innerHTML =
+            "Por favor, selecione um tipo de frete e um método de pagamento.";
+        } else if (!hasFreightSelected) {
+          document.getElementById("errorMessage").innerHTML =
+            "Por favor, selecione um tipo de frete.";
+        } else if (!hasPaymentSelected) {
+          document.getElementById("errorMessage").innerHTML =
+            "Por favor, selecione um método de pagamento.";
+        } else {
+          document.getElementById("errorMessage").innerHTML = "";
+          sendPaymentData();
+        }
+      }
+
+      function sendPaymentData() {
+        const selectedFreight = getSelectedFreight();
+        const selectedPayment = getSelectedPayment();
+
+        const data = {
+          freight: selectedFreight,
+          payment: selectedPayment,
+          height: localStorage.getItem("height"),
+          width: localStorage.getItem("width"),
+          length: localStorage.getItem("length"),
+          name: localStorage.getItem("name"),
+          description: localStorage.getItem("description"),
+          cep: localStorage.getItem("cep"),
+          state: localStorage.getItem("state"),
+          city: localStorage.getItem("city"),
+          street: localStorage.getItem("street"),
+          number: localStorage.getItem("number"),
+          block: localStorage.getItem("block"),
+          batch: localStorage.getItem("batch"),
+          destCep: localStorage.getItem("destCep"),
+          destState: localStorage.getItem("destState"),
+          destCity: localStorage.getItem("destCity"),
+          destStreet: localStorage.getItem("destStreet"),
+          destNumber: localStorage.getItem("destNumber"),
+          destBlock: localStorage.getItem("destBlock"),
+          destBatch: localStorage.getItem("destBatch"),
+        };
+
+        fetch("http://your-spring-backend-url/api/payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.text();
+            } else {
+              throw new Error(
+                "Erro ao processar o pagamento. Por favor, tente novamente."
+              );
+            }
+          })
+          .then((text) => {
+            alert("Pagamento efetuado! O produto foi adicionado ao BD.");
+            window.location.href = "createShipment.html";
+          })
+          .catch((error) => {
+            document.getElementById("errorMessage").innerHTML =
+              "Erro ao processar o pagamento. Por favor, tente novamente.";
+          });
+      }
+      window.onload = setFreightValues;
+    </script>
+  </body>
+</html>
