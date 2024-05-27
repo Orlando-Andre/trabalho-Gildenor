@@ -13,7 +13,7 @@ function carregaTabela() {
           
   $.ajax({
     
-    url:"http://localhost:" + porta + "/status/consultar/" + codigoRastreio ,
+    url:"http://localhost:" + porta + "/status/consultar/" + codigoRastreio,
     type: 'get',
     data: {},
 
@@ -45,7 +45,6 @@ function carregaTabela() {
 }
 
 
-
 function mostraLinhaTabela(data) {
   return (
 
@@ -61,8 +60,6 @@ document.getElementById('btnFechar').addEventListener('click', function(){
     parent.postMessage('fecharIframe', "*");
 
 });
-
-
 
 
 function funcaoReceptora(valor) {

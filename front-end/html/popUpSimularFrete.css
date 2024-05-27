@@ -114,3 +114,8 @@ input {
 .botao.verde:hover {
     background-color: #87fa14;
 }
+
+
+.hidden {
+    display: none;
+}

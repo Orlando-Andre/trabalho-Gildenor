@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="../css/">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
     <title>Home</title>
 </head>
 <body>
+
+    <iframe class="iframe-Content" id="iframeContent" frameborder="0"></iframe>
+
     <header>
 
         <img class="logo" src="../imagens/logoBranco.png" alt="">
@@ -18,7 +20,7 @@
 
     </header>
 
-    <main class="main">
+    <main class="main" id="main">
 
         <div class="box">
 
@@ -55,7 +57,7 @@
                 </div>
             </div>
 
-            <button class="botao verde" id="btnContinuar" type="button" onclick="popUpSimular()">Continuar</button>
+            <button class="botao verde" id="btnContinuar" type="button" onclick="validaDadosSimulacao()">Continuar</button>
 
         </div>
 
@@ -65,14 +67,12 @@
 
             <div class="textfield-rastreio">
                 <label class="lblCodigoRastreio" for="peso">Código de rastreio</label>
-                <input placeholder="AA123456789BR" class="campoCodigoRastreio" type="text">
+                <input id="codigoRastreio" placeholder="AA123456789BR" class="campoCodigoRastreio" type="text">
             </div>
-            
 
-            <button class="botao verde" id="btnRastrear" type="button" onclick="popUpRastrear()">Rastrear</button>
+            <button class="botao verde" id="btnRastrear" type="button" onclick="validaDadosRastreamento()">Rastrear</button>
 
         </div>
-
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
