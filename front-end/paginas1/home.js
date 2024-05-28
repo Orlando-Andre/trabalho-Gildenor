@@ -1,9 +1,11 @@
 var codigoRastreio
 
+var cepOrigem, cepDestino, altura, largura, comprimento, peso
+
 //Abrir a tela de login
 function login() {
 
-    var URL = 'menu.html';
+    var URL = 'Login.html';
 
     //Chamar tela de login
     // Altere a propriedade 'href' do objeto location para a URL da outra tela.
@@ -25,8 +27,62 @@ function validaDadosRastreamento() {
         popUpRastrear()
 
     }
-
 }
+
+function validaDadosSimulacao() {
+
+    cepOrigem = document.getElementById('origem')
+    altura = document.getElementById("altura")
+    comprimento = document.getElementById('comprimento')
+    cepDestino = document.getElementById('destino')
+    largura = document.getElementById('largura')
+    peso = document.getElementById('peso')
+
+    if(cepOrigem.value === '' ) {
+        
+        cepOrigem.focus()
+        alert("Verifique o CEP de origem")
+
+    } else {
+        if(altura.value === '') {
+            
+            altura.focus()
+            alert("Verifique a altura")
+
+        } else {
+            if(comprimento.value === '') {
+
+                comprimento.focus()
+                alert("Verifique o comprimento")
+
+            }else{
+                if(cepDestino.value === ''){
+
+                cepDestino.focus()
+                alert("Verifique o CEP de destino")
+
+                }else{
+                    if(largura.value === '') {
+
+                        largura.focus()
+                        alert("Verifique a largura")
+
+                    }else{
+                        if(peso.value === '') {
+                            peso.focus()
+                            alert("Verifique o peso")
+                        } else {
+
+                            popUpSimular()
+                        }
+                    }
+                }
+            }
+        }
+    } 
+}
+
+
 
 //Abrir o popUp de simular cálculo dos fretes
 function popUpSimular() {
@@ -40,8 +96,24 @@ function popUpSimular() {
     const iframe = document.querySelector('.iframe-Content');
     iframe.classList.toggle('ativo')
 
+    iframe.onload = function() {
+    
+        const origem = cepOrigem.value
+        const destino = cepDestino.value
+        const alt = altura.value
+        const compr = comprimento.value
+        const larg = largura.value
+        const p = peso.value
+
+        const dados = { origem, destino, alt, compr, larg, p };
+
+        iframe.contentWindow.postMessage(dados, '*');
+
+    };
+
     //Defina a URL do iframe para carregar o conteúdo do arquivo HTML
     iframe.src = url;
+
 }
 
 
@@ -59,21 +131,18 @@ function popUpRastrear() {
 
 
     iframe.onload = function() {
-        // Acesse o conteúdo do iframe
-        var iframeConteudo = iframe.contentWindow;
     
-        // Agora você pode passar o valor para o iframe
-        var meuValor = codigoRastreio.value;
-    
-        // Pass ao valor para uma função ou variável dentro do iframe
-        iframeConteudo.funcaoReceptora(meuValor);
+        const cod = codigoRastreio.value
 
-    }
+        const dados = {cod};
+
+        iframe.contentWindow.postMessage(dados, '*');
+
+    };
 
     //Defina a URL do iframe para carregar o conteúdo do arquivo HTML
     iframe.src = url;
 }
-
 
 
 // Adiciona um ouvinte para mensagens postadas de dentro do iframe
@@ -84,9 +153,7 @@ window.addEventListener('message', function(event) {
 
         // Oculta ou remove o iframe
         document.getElementById('iframeContent').style.display = 'none';
-
         restaurarDados();
-
     }
 });
 
@@ -96,5 +163,8 @@ function escondeDados() {
 }
 
 function restaurarDados() {
-    document.getElementById('main').classList.remove('esconder');
+    document.getElementById('main').classList.remove('esconder');      
+    location.reload();
+  
+    
 }

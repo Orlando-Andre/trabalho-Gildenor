@@ -2,10 +2,16 @@ const porta = 1010
 
 var codigoRastreio;
 
-$(document).ready(function() {
+window.addEventListener('message', function(event) {
 
-  carregaTabela();
+  const dados = event.data;
 
+  if (dados) {
+
+    codigoRastreio = dados.cod;
+    carregaTabela();
+
+  }
 });
 
 
@@ -29,7 +35,7 @@ function carregaTabela() {
 
         for(let i = 0; i < msg.length; i++) { 
           
-          linhas += mostraLinhaTabela(msg[i]);
+          linhas += mostraLinhaTabela(msg[i] , i+1);
 
         }  
 
@@ -45,14 +51,14 @@ function carregaTabela() {
 }
 
 
-function mostraLinhaTabela(data) {
+
+function mostraLinhaTabela(data , i) {
   return (
 
-    '<tr><td>' + data.descricao + '</td></tr>'
+    '<tr><td>'+i+'.' + data.descricao + '</td></tr>'
 
   );
 }
-
 
 //ouve se haverá cliques no botão 
 document.getElementById('btnFechar').addEventListener('click', function(){
@@ -62,9 +68,5 @@ document.getElementById('btnFechar').addEventListener('click', function(){
 });
 
 
-function funcaoReceptora(valor) {
 
-  codigoRastreio = valor
-
-}
 

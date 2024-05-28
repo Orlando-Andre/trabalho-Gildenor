@@ -26,6 +26,7 @@ header > h1 {
 }
 
 main {
+
     width: 70vw;
     height: 350px;
     background-color: var(--azulClaro);
@@ -53,6 +54,7 @@ main {
 }
 
 .botao.verde {
+    
     background-color: var(--verde);
     width: 200px;
     font-size: 1.5rem;

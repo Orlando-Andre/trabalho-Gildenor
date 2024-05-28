@@ -74,6 +74,7 @@ const fecharModal = () => document.getElementById('modal')
 
 document.getElementById('btnCadastrarAgencia').addEventListener('click', function() {
   abrirModal();
+
 });
 
 document.getElementById('modalFechar')

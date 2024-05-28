@@ -25,24 +25,6 @@ body {
     flex-direction: column;
 }
 
-header {
-    background-color: var(--azulEscuro);
-    width: 100%;
-    height: 70px;
-    line-height: 70px;
-    box-shadow: 0 1px 2px #CCC;
-    display: flex;
-    justify-content: space-between;
-
-}
-
-header h1 {
-    text-align: end;
-    color: white;
-    font-size: 2rem;
-    margin-right: 5%;
-}
-
 .main.esconder {
     display: none;
 }
@@ -74,16 +56,16 @@ main .head-main {
 }
 
 .div-pesquisa {
-    width: 25%;
+    width: 30%;
     display: flex;
+    justify-content: flex-end;
 }
 
 main .head-main .div-pesquisa > input {
     width: 80%;
     margin-right: 11px;
     margin-left: 10px;
-    color: var(--azulClaro);
-
+    color: white;
 
     width: calc(50% - 10px);
     height: 40px;
@@ -92,10 +74,7 @@ main .head-main .div-pesquisa > input {
     box-shadow: 0 0 2px black;
     padding: 0 10px;
     font-size: 1rem;
-    background-color: var(--azulEscuro);
-
-
-
+    background-color: var(--azulClaro);
 }
 
 main .head-main .div-pesquisa > span {
@@ -145,7 +124,6 @@ main .botao.cadastrar:hover {
 main .botao.editar {
     background-color: var(--azulEscuro);
     margin-right: 4px;
-
 }
 
 main .botao.excluir {
@@ -306,7 +284,6 @@ main .botao.cancelar:hover {
 .modal-campo:focus {
     border: 2px solid var(--azulClaro);
     box-shadow: 0 0 3px var(--azulClaro);
-
 }
 
 .modal-footer {

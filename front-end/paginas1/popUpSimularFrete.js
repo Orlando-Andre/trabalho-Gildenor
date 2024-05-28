@@ -4,6 +4,7 @@ var cepRemetente, cidadeRemetente, numeroRemetente, loteRemetente, ufRemetente ,
 
 var cepDestinatario, cidadeDestinatario, numeroDestinatario, loteDestinatario, ufDestinatario, ruaDestinatario, quadraDestinatario, bairroDestinatario
 
+
 window.addEventListener('message', function(event) {
 
     const dados = event.data;
@@ -75,5 +76,16 @@ function calcularFrete() {
 
     document.getElementById("valorFretePac").innerText = pacValue + " R$";
     document.getElementById("valorFreteSedex").innerText = sedexValue + " R$";
+
+    //mudar a função do botão calcular para fechar
+    var botaoCalcular = document.getElementById('btnCalcular');
+    botaoCalcular.innerText = "Fechar";  // Muda o texto do botão para 'Fechar'
+    botaoCalcular.onclick = fechar;
     
+  }
+
+  function fechar(){
+
+    parent.postMessage('fecharIframe', "*");
+
   }

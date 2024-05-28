@@ -99,9 +99,10 @@
           Efetuar Pagamento
         </button>
       </div>
-      <br>
-      <div id="errorMessage" class="error" style="color: white;"></div>
+      <br />
+      <div id="errorMessage" class="error" style="color: white"></div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
       const porta = 1010;
       function highlightButton(buttonId) {
@@ -128,35 +129,13 @@
 
       function setFreightValues() {
         var pacValue = parseFloat(getRandomValue(29.99, 119.99));
-        var sedexValue = (pacValue * 1.15).toFixed(2);
-        var expressValue = (pacValue * 1.2).toFixed(2);
+        var sedexValue = (pacValue * 1.4).toFixed(2);
+        var expressValue = (pacValue * 1.7).toFixed(2);
 
         document.getElementById("pacValue").innerText = pacValue + " R$";
         document.getElementById("sedexValue").innerText = sedexValue + " R$";
         document.getElementById("expressValue").innerText =
           expressValue + " R$";
-      }
-
-      function getSelectedFreight() {
-        var selectedFreight;
-        var buttons = document.querySelectorAll(".mainBlock button");
-        buttons.forEach(function (button) {
-          if (button.classList.contains("selected")) {
-            selectedFreight = button.id.replace("Button", "");
-          }
-        });
-        return selectedFreight;
-      }
-
-      function getSelectedPayment() {
-        var selectedPayment;
-        var buttons = document.querySelectorAll(".paymentMethodRow a");
-        buttons.forEach(function (button) {
-          if (button.classList.contains("selected")) {
-            selectedPayment = button.id.replace("Button", "");
-          }
-        });
-        return selectedPayment;
       }
 
       function validateForm() {
@@ -192,61 +171,54 @@
           sendPaymentData();
         }
       }
-
       function sendPaymentData() {
-        const selectedFreight = getSelectedFreight();
-        const selectedPayment = getSelectedPayment();
+    // Cria o objeto de dados a partir do localStorage
+    const data = {
+        uf_remetente: localStorage.getItem("state"),
+        uf_destinatario: localStorage.getItem("destState")
+    };
 
-        const data = {
-          freight: selectedFreight,
-          payment: selectedPayment,
-          height: localStorage.getItem("height"),
-          width: localStorage.getItem("width"),
-          length: localStorage.getItem("length"),
-          name: localStorage.getItem("name"),
-          description: localStorage.getItem("description"),
-          cep: localStorage.getItem("cep"),
-          state: localStorage.getItem("state"),
-          city: localStorage.getItem("city"),
-          street: localStorage.getItem("street"),
-          number: localStorage.getItem("number"),
-          block: localStorage.getItem("block"),
-          batch: localStorage.getItem("batch"),
-          destCep: localStorage.getItem("destCep"),
-          destState: localStorage.getItem("destState"),
-          destCity: localStorage.getItem("destCity"),
-          destStreet: localStorage.getItem("destStreet"),
-          destNumber: localStorage.getItem("destNumber"),
-          destBlock: localStorage.getItem("destBlock"),
-          destBatch: localStorage.getItem("destBatch"),
-        };
+    // Primeira requisição AJAX para criar o envio
+    $.ajax({
+        url: "http://localhost:" + porta + "/envios/criar",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json;charset=UTF-8",
+        success: function (response) {
+            alert("Envio criado com sucesso! ID: " + response.idEnvio);
 
-        fetch("http://localhost:" + porta + "/shipment/createShipment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if (response.ok) {
-              return response.text();
-            } else {
-              throw new Error(
-                "Erro ao processar o pagamento. Por favor, tente novamente."
-              );
-            }
-          })
-          .then((text) => {
-            alert("Pagamento efetuado! O produto foi adicionado ao BD.");
-            window.location.href = "menu.html";
-          })
-          .catch((error) => {
+            const descricao = "Objeto Postado"; 
+            const codigoEnvio = response.idEnvio;
+
+            $.ajax({
+                url: "http://localhost:" + porta + "/rastreio/atualizar",
+                type: "POST",
+                data: JSON.stringify({
+                    descricao: descricao,
+                    gerar_envio: {
+                        idEnvio: codigoEnvio,
+                    },
+                }),
+                contentType: "application/json;charset=UTF-8",
+                success: function () {
+                    alert("Rastreio atualizado com sucesso!");
+                },
+                error: function (xhr, status, error) {
+                    alert("Erro ao atualizar o rastreio: " + error);
+                    document.getElementById("errorMessage").innerHTML =
+                        "Erro ao atualizar o rastreio: " + error;
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            alert("Erro ao criar o envio: " + error);
             document.getElementById("errorMessage").innerHTML =
-              "Erro ao processar o pagamento. Por favor, tente novamente.";
-            alert(error.message);
-          });
-      }
+                "Erro ao criar o envio: " + error;
+        }
+    });
+}
+
+
       window.onload = setFreightValues;
     </script>
   </body>

@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 @Table
 public class GerarEnvio {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEnvio;
@@ -22,8 +21,7 @@ public class GerarEnvio {
 	@Column
 	private String uf_destinatario;
 	
-	
-
+	// Getters e setters
 	public Long getIdEnvio() {
 		return idEnvio;
 	}
@@ -47,5 +45,4 @@ public class GerarEnvio {
 	public void setUf_destinatario(String uf_destinatario) {
 		this.uf_destinatario = uf_destinatario;
 	}
-	
 }
